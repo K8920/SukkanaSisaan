@@ -13,23 +13,25 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace SukkanaSisaan
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class Player : Page
     {
-        public MainPage()
+        public double LocationX { get; set; }
+        public double LocationY { get; set; }
+        public Player()
         {
             this.InitializeComponent();
         }
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        public void UpdateLocation()
         {
-            Frame.Navigate(typeof(Game_map_01));
+            SetValue(Canvas.LeftProperty, LocationX);
+            SetValue(Canvas.TopProperty, LocationY);
         }
     }
 }
