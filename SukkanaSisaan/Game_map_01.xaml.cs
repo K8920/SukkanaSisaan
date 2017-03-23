@@ -98,6 +98,7 @@ namespace SukkanaSisaan
             }
         }
 
+        // lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
