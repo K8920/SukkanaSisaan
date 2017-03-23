@@ -26,7 +26,6 @@ namespace SukkanaSisaan
         {
             this.InitializeComponent();
         }
-
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Game_map_01));

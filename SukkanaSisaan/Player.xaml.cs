@@ -22,12 +22,45 @@ namespace SukkanaSisaan
     /// </summary>
     public sealed partial class Player : Page
     {
+        // offset
+        // private int currentFrame = 0
+        // private int frameheight = X
+
+        // private DispatcherTimer timer;
+
+        // private double 
+        private double speed = 10;
+
         public double LocationX { get; set; }
         public double LocationY { get; set; }
+
+
         public Player()
         {
             this.InitializeComponent();
         }
+
+        // MOVEMENTS
+        public void MoveUp()
+        {
+            LocationY = LocationY - speed;
+        }
+
+        public void MoveDown()
+        {
+            LocationY = LocationY + speed;
+        }
+
+        public void MoveLeft()
+        {
+            LocationX = LocationX - speed;
+        }
+
+        public void MoveRight()
+        {
+            LocationX = LocationX + speed;
+        }
+
         public void UpdateLocation()
         {
             SetValue(Canvas.LeftProperty, LocationX);
