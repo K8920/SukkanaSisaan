@@ -28,6 +28,7 @@ namespace SukkanaSisaan
 
         // player
         private Player player;
+        private Projectile projectile;
         private Rock rock;
         private bool CollisionHappen = false;
 
@@ -39,8 +40,11 @@ namespace SukkanaSisaan
         private bool DownPressed;
         private bool LeftPressed;
         private bool RightPressed;
+        private bool ZPressed;
+        private bool ProjectileActive = false;
 
         private DispatcherTimer timer;
+        private DispatcherTimer attTimer;
 
         public Game_map_01()
         {
@@ -63,7 +67,8 @@ namespace SukkanaSisaan
             {
                 LocationX = GameCanvas.Width / 2,
                 LocationY = GameCanvas.Height / 2
-             };
+            };
+            player.UpdatePlayer();
 
             // solid object location
             rock = new Rock
@@ -72,8 +77,6 @@ namespace SukkanaSisaan
                 LocationY = GameCanvas.Height / 3
             };
            
-          
-
             // add player to the canvas
             GameCanvas.Children.Add(player);
 
@@ -90,17 +93,29 @@ namespace SukkanaSisaan
             timer.Tick += Timer_Tick;
             timer.Start();
 
+            // attack timer
+            attTimer = new DispatcherTimer();
+            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            attTimer.Tick += attTimer_Tick;
+
             // update player position
-            player.UpdateLocation();
+            player.UpdatePlayer();
             rock.UpdateLocation();
             monster.UpdateMonster();
+        }
+
+        private void attTimer_Tick(object sender, object e)
+        {
+            GameCanvas.Children.Remove(projectile);
+            attTimer.Stop();
+            ProjectileActive = false;
         }
 
         private void Timer_Tick(object sender, object e)
         {
             // moving
             CheckCollision();
-            player.UpdateLocation();
+            player.UpdatePlayer();
 
             if (UpPressed)
             {
@@ -130,11 +145,26 @@ namespace SukkanaSisaan
                 else if (CollisionHappen == true)
                     player.LocationX = player.LocationX - 20;
             }
-
+            // Z KEY
+            if (ZPressed)
+            {
+                if (ProjectileActive == false)
+                {
+                    projectile = new Projectile
+                    {
+                        LocationX = player.LocationX,
+                        LocationY = player.LocationY - 30
+                    };
+                    ProjectileActive = true;
+                    GameCanvas.Children.Add(projectile);
+                    attTimer.Start();
+                }
+            }
             monster.MovePattern1();
-            player.UpdateLocation();
+            player.UpdatePlayer();
             monster.UpdateMonster();
-           
+            if (ProjectileActive) projectile.UpdateProjectile();
+
             /* if (CollisionHappen == true)
              {
                  UpPressed = false;
@@ -185,6 +215,9 @@ namespace SukkanaSisaan
                 case VirtualKey.Right:
                     RightPressed = false;
                     break;
+                case VirtualKey.Z:
+                    ZPressed = false;
+                    break;
             }
         }
 
@@ -206,7 +239,10 @@ namespace SukkanaSisaan
                     case VirtualKey.Right:
                         RightPressed = true;
                         break;
-                }
+                    case VirtualKey.Z:
+                        ZPressed = true;
+                        break;
+            }
             
         }
     }
