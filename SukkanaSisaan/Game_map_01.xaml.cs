@@ -23,6 +23,9 @@ namespace SukkanaSisaan
     /// </summary>
     public sealed partial class Game_map_01 : Page
     {
+        // monster
+        private Monster monster;
+
         // player
         private Player player;
 
@@ -43,6 +46,15 @@ namespace SukkanaSisaan
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
 
+            // monster location
+            monster = new Monster
+            {
+                LocationX = 300,
+                LocationY = 400
+            };
+            monster.UpdateMonster();
+            // add monster to the canvas
+            GameCanvas.Children.Add(monster);
 
             // player location
             player = new Player
