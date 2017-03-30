@@ -54,7 +54,7 @@ namespace SukkanaSisaan
                 LocationX = 300,
                 LocationY = 400
             };
-            monster.UpdateMonster();
+           
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
 
@@ -93,6 +93,7 @@ namespace SukkanaSisaan
             // update player position
             player.UpdateLocation();
             rock.UpdateLocation();
+            monster.UpdateMonster();
         }
 
         private void Timer_Tick(object sender, object e)
@@ -130,8 +131,10 @@ namespace SukkanaSisaan
                     player.LocationX = player.LocationX - 20;
             }
 
-
+            monster.MovePattern1();
             player.UpdateLocation();
+            monster.UpdateMonster();
+           
             /* if (CollisionHappen == true)
              {
                  UpPressed = false;
