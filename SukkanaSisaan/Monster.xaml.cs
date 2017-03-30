@@ -26,16 +26,34 @@ namespace SukkanaSisaan
         // Monster maxhealth
         private int healthMax;
         // Monster speed
-        private double speed;
+        private double speed = 10;
         // Monster locations
         public double LocationX;
         public double LocationY;
+        public int move = 0;
         public Monster()
         {
             this.InitializeComponent();
         }
         // COLLISION
         // MOVEMENT
+        // test movement
+        public void MovePattern1()
+        {
+            if (move == 0)
+               {
+                LocationX = LocationX + speed;
+                if (LocationX > 400)
+                    move = 1;
+               }
+
+            if (move == 1)
+            {
+                LocationX = LocationX - speed;
+                if (LocationX < 100)
+                    move = 0;
+                    }
+        }
         // DETECT
         // CHASE
         // UPDATE MONSTER LOCATION

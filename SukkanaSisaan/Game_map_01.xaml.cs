@@ -25,7 +25,7 @@ namespace SukkanaSisaan
     {
         // monster
         private Monster monster;
-
+        private Monster monster2;
         // player
         private Player player;
 
@@ -39,7 +39,6 @@ namespace SukkanaSisaan
         private bool RightPressed;
 
         private DispatcherTimer timer;
-
         public Game_map_01()
         {
             this.InitializeComponent();
@@ -52,7 +51,6 @@ namespace SukkanaSisaan
                 LocationX = 300,
                 LocationY = 400
             };
-            monster.UpdateMonster();
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
 
@@ -62,7 +60,6 @@ namespace SukkanaSisaan
                 LocationX = GameCanvas.Width / 2,
                 LocationY = GameCanvas.Height / 2
              };
-            
             // add player to the canvas
             GameCanvas.Children.Add(player);
 
@@ -75,7 +72,9 @@ namespace SukkanaSisaan
             timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
             timer.Tick += Timer_Tick;
             timer.Start();
-
+            
+            // update monster location
+            monster.UpdateMonster();
             // update player position
             player.UpdateLocation();
         }
@@ -88,9 +87,17 @@ namespace SukkanaSisaan
             if (LeftPressed) player.MoveLeft();
             if (RightPressed) player.MoveRight();
             player.UpdateLocation();
+            monster.MovePattern1();
+            monster.UpdateMonster();
 
+            if(monster.LocationX == player.LocationX - 10 || monster.LocationX == player.LocationX + 10)
+            {
+                monster.move = 2;
+                monster.LocationX = monster.LocationX + 10;
+            }
         }
 
+        // Key released
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -110,7 +117,7 @@ namespace SukkanaSisaan
             }
         }
 
-        // lul lul
+        // Key pressed
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
