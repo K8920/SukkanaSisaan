@@ -25,9 +25,11 @@ namespace SukkanaSisaan
     {
         // monster
         private Monster monster;
-        private Monster monster2;
+
         // player
         private Player player;
+        private Rock rock;
+        private bool CollisionHappen = false;
 
         // canvas width and height
         private double CanvasWidth;
@@ -39,6 +41,7 @@ namespace SukkanaSisaan
         private bool RightPressed;
 
         private DispatcherTimer timer;
+
         public Game_map_01()
         {
             this.InitializeComponent();
@@ -51,6 +54,7 @@ namespace SukkanaSisaan
                 LocationX = 300,
                 LocationY = 400
             };
+            monster.UpdateMonster();
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
 
@@ -60,8 +64,21 @@ namespace SukkanaSisaan
                 LocationX = GameCanvas.Width / 2,
                 LocationY = GameCanvas.Height / 2
              };
+
+            // solid object location
+            rock = new Rock
+            {
+                LocationX = GameCanvas.Width / 3,
+                LocationY = GameCanvas.Height / 3
+            };
+           
+          
+
             // add player to the canvas
             GameCanvas.Children.Add(player);
+
+            // add test solid dwayne the rock johnson
+            GameCanvas.Children.Add(rock);
 
             // key listeners
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
@@ -72,32 +89,83 @@ namespace SukkanaSisaan
             timer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
             timer.Tick += Timer_Tick;
             timer.Start();
-            
-            // update monster location
-            monster.UpdateMonster();
+
             // update player position
             player.UpdateLocation();
+            rock.UpdateLocation();
         }
 
         private void Timer_Tick(object sender, object e)
         {
             // moving
-            if (UpPressed) player.MoveUp();
-            if (DownPressed) player.MoveDown();
-            if (LeftPressed) player.MoveLeft();
-            if (RightPressed) player.MoveRight();
+            CheckCollision();
             player.UpdateLocation();
-            monster.MovePattern1();
-            monster.UpdateMonster();
 
-            if(monster.LocationX == player.LocationX - 10 || monster.LocationX == player.LocationX + 10)
+            if (UpPressed)
             {
-                monster.move = 2;
-                monster.LocationX = monster.LocationX + 10;
+                if (CollisionHappen == false)
+                    player.MoveUp();
+                else if (CollisionHappen == true)
+                    player.LocationY = player.LocationY + 20;
+            }
+            if (DownPressed)
+            {
+                if (CollisionHappen == false)
+                    player.MoveDown();
+                else if (CollisionHappen == true)
+                    player.LocationY = player.LocationY - 20;
+            }
+            if (LeftPressed)
+            {
+                if (CollisionHappen == false)
+                    player.MoveLeft();
+                else if (CollisionHappen == true)
+                    player.LocationX = player.LocationX + 20;
+            }
+            if (RightPressed)
+            {
+                if (CollisionHappen == false)
+                    player.MoveRight();
+                else if (CollisionHappen == true)
+                    player.LocationX = player.LocationX - 20;
+            }
+
+
+            player.UpdateLocation();
+            /* if (CollisionHappen == true)
+             {
+                 UpPressed = false;
+                 DownPressed = false;
+                 LeftPressed = false;
+                 RightPressed = false;
+
+
+            // POISTA
+             if (UpPressed) player.MoveUp();
+                 if (DownPressed) player.MoveDown();
+                 if (LeftPressed) player.MoveLeft();
+                 if (RightPressed) player.MoveRight();
+             }
+             */
+
+
+        }
+        private void CheckCollision()
+        {
+            // player
+            Rect r1 = new Rect(player.LocationX, player.LocationY, player.ActualHeight, player.ActualWidth);
+            // rock
+            Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
+            r1.Intersect(r2);
+            if (!r1.IsEmpty)
+            {
+                CollisionHappen = true;
+            }
+            else if (r1.IsEmpty)
+            {
+                CollisionHappen = false;
             }
         }
-
-        // Key released
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -117,24 +185,26 @@ namespace SukkanaSisaan
             }
         }
 
-        // Key pressed
+        // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-            switch (args.VirtualKey)
-            {
-                case VirtualKey.Up:
-                    UpPressed = true;
-                    break;
-                case VirtualKey.Down:
-                    DownPressed = true;
-                    break;
-                case VirtualKey.Left:
-                    LeftPressed = true;
-                    break;
-                case VirtualKey.Right:
-                    RightPressed = true;
-                    break;
-            }
+           
+                switch (args.VirtualKey)
+                {
+                    case VirtualKey.Up:
+                        UpPressed = true;
+                        break;
+                    case VirtualKey.Down:
+                        DownPressed = true;
+                        break;
+                    case VirtualKey.Left:
+                        LeftPressed = true;
+                        break;
+                    case VirtualKey.Right:
+                        RightPressed = true;
+                        break;
+                }
+            
         }
     }
 }
