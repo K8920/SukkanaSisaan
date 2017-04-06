@@ -29,7 +29,7 @@ namespace SukkanaSisaan
         // private DispatcherTimer timer;
 
         // private double 
-        private double speed = 10;
+        public double speed = 10;
 
         public double LocationX { get; set; }
         public double LocationY { get; set; }
