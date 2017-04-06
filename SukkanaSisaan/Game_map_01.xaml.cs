@@ -25,7 +25,7 @@ namespace SukkanaSisaan
     {
         // monster
         private Monster monster;
-
+        private Monster monster2;
         // player
         private Player player;
         private List<Heart> hearts;
@@ -33,7 +33,6 @@ namespace SukkanaSisaan
         private Projectile projectile;
         private Rock rock;
         private Woods_1 woods_1;
-        private bool CollisionHappen = false;
 
         // canvas width and height
         private double CanvasWidth;
@@ -46,8 +45,16 @@ namespace SukkanaSisaan
         private bool ZPressed;
         private bool ProjectileActive = false;
 
+        private bool UpHit = false;
+        private bool DnHit = false;
+        private bool LeHit = false;
+        private bool RiHit = false;
+
         private DispatcherTimer timer;
         private DispatcherTimer attTimer;
+        private DispatcherTimer monstertimer1;
+        private DispatcherTimer monstertimer2;
+        private DispatcherTimer randnumtimer;
 
         public Game_map_01()
         {
@@ -75,14 +82,21 @@ namespace SukkanaSisaan
                 heart.SetLocation();
             }
 
-            // monster location
             monster = new Monster
             {
                 LocationX = 300,
                 LocationY = 400
             };
+           
+            monster2 = new Monster
+            {
+                LocationX = 300,
+                LocationY = 400
+            };
+           
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
+            GameCanvas.Children.Add(monster2);
 
             // player location
             player = new Player
@@ -132,11 +146,56 @@ namespace SukkanaSisaan
             attTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             attTimer.Tick += attTimer_Tick;
 
-            // update player position
+            // randnum timer
+            randnumtimer = new DispatcherTimer();
+            randnumtimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 3);
+            randnumtimer.Tick += randnumtimer_Tick;
+            randnumtimer.Start();
+
+            //timer 2
+            // randnum timer
+            randnumtimer = new DispatcherTimer();
+            randnumtimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 3);
+            randnumtimer.Tick += randnumtimer2_Tick;
+            randnumtimer.Start();
+
+            // monster timer
+            monstertimer1 = new DispatcherTimer();
+            monstertimer1.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
+            monstertimer1.Tick += monstertimer1_Tick;
+            monstertimer1.Start();
+
+            // monster timer 2
+            monstertimer2 = new DispatcherTimer();
+            monstertimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
+            monstertimer2.Tick += monstertimer2_Tick;
+            monstertimer2.Start();
+
+            // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
             woods_1.UpdateLocation();
             monster.UpdateMonster();
+            monster2.UpdateMonster();
+        }
+        // random number generated for monster movement
+        private void randnumtimer_Tick(object sender, object e)
+        {
+            monster.GenerateNumber();
+        }
+        private void randnumtimer2_Tick(object sender, object e)
+        {
+            monster2.GenerateNumber2();
+            
+        }
+        // monster random movement
+        private void monstertimer1_Tick(object sender, object e)
+        {
+            monster.MovePattern2();
+        }
+        private void monstertimer2_Tick(object sender, object e)
+        {
+            monster2.MovePattern2();
         }
 
         private void attTimer_Tick(object sender, object e)
@@ -155,34 +214,26 @@ namespace SukkanaSisaan
             if (UpPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 0;
-                if (CollisionHappen == false)
-                    player.MoveUp();
-                else if (CollisionHappen == true)
-                    player.LocationY = player.LocationY + 20;
+                player.MoveUp();
+            
             }
             if (DownPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 2;
-                if (CollisionHappen == false)
-                    player.MoveDown();
-                else if (CollisionHappen == true)
-                    player.LocationY = player.LocationY - 20;
+                player.MoveDown();
+
             }
             if (LeftPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 3;
-                if (CollisionHappen == false)
-                    player.MoveLeft();
-                else if (CollisionHappen == true)
-                    player.LocationX = player.LocationX + 20;
+                player.MoveLeft();
+ 
             }
             if (RightPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 1;
-                if (CollisionHappen == false)
-                    player.MoveRight();
-                else if (CollisionHappen == true)
-                    player.LocationX = player.LocationX - 20;
+                player.MoveRight();
+ 
             }
             // Z KEY
             if (ZPressed)
@@ -233,9 +284,9 @@ namespace SukkanaSisaan
                     attTimer.Start();
                 }
             }
-            monster.MovePattern1();
             player.UpdatePlayer();
             monster.UpdateMonster();
+            monster2.UpdateMonster();
             if (ProjectileActive) projectile.UpdateProjectile();
 
             /* if (CollisionHappen == true)
@@ -256,6 +307,7 @@ namespace SukkanaSisaan
 
 
         }
+
         private void CheckCollision()
         {
             // player
@@ -264,19 +316,41 @@ namespace SukkanaSisaan
             // rock
            //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
            // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
-               //Rect woodsleft_1 = new Rect
+            if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
                //Rect woodsleft_1 = new Rect
                //Rect woodsleft_1 = new Rect
             //r1.Intersect(r2);
-            if (!r1.IsEmpty)
             {
-                CollisionHappen = true;
+                UpPressed = false;
+                UpHit = true;
             }
-            else if (r1.IsEmpty)
+            if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
             {
-                CollisionHappen = false;
+                DownPressed = false;
+                DnHit = true;
+            }
+            if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
+            {
+                LeftPressed = false;
+                LeHit = true;
+             
+            }
+            if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
+            {
+                RightPressed = false;
+                RiHit = true;
+              
+            }
+                    
+            if (r1.IsEmpty)
+            {
+                UpHit = false;
+                DnHit = false;
+                LeHit = false;
+                RiHit = false;
             }
         }
+        
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -302,24 +376,26 @@ namespace SukkanaSisaan
         // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-                switch (args.VirtualKey)
-                {
-                    case VirtualKey.Up:
-                        UpPressed = true;
-                        break;
-                    case VirtualKey.Down:
-                        DownPressed = true;
-                        break;
-                    case VirtualKey.Left:
-                        LeftPressed = true;
-                        break;
-                    case VirtualKey.Right:
-                        RightPressed = true;
-                        break;
-                    case VirtualKey.Z:
-                        ZPressed = true;
-                        break;
-            }
+           
+                    switch (args.VirtualKey)
+                    {
+                        case VirtualKey.Up:
+                            UpPressed = true;
+                            break;
+                        case VirtualKey.Down:
+                            DownPressed = true;
+                            break;
+                        case VirtualKey.Left:
+                            LeftPressed = true;
+                            break;
+                        case VirtualKey.Right:
+                            RightPressed = true;
+                            break;
+                        case VirtualKey.Z:
+                            ZPressed = true;
+                            break;
+                    }
+                
             
         }
     }

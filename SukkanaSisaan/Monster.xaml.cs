@@ -26,33 +26,76 @@ namespace SukkanaSisaan
         // Monster maxhealth
         private int healthMax;
         // Monster speed
-        private double speed = 10;
+        public double speed = 10;
         // Monster locations
         public double LocationX;
         public double LocationY;
         public int move = 0;
+        Random random = new Random();
+        int randomnumber;
         public Monster()
         {
             this.InitializeComponent();
         }
         // COLLISION
         // MOVEMENT
-        // test movement
-        public void MovePattern1()
+      //  public void MovePattern1()
+      //  {
+      //     if (move == 0)
+      //     {
+      //         LocationX = LocationX + speed;
+      //         if (LocationX > 400)
+      //         move = 1;
+      //     }
+      // 
+      //         if (move == 1)
+      //     {
+      //         LocationX = LocationX - speed;
+      //         if (LocationX < 100)
+      //         move = 0;
+      //     }
+      //  }
+        // GENERATE RANDOM NUMBER
+        public void GenerateNumber()
         {
-            if (move == 0)
-               {
-                LocationX = LocationX + speed;
-                if (LocationX > 400)
-                    move = 1;
-               }
+           randomnumber = random.Next(1, 5);
+        }
 
-            if (move == 1)
+        public void GenerateNumber2()
+        {
+            randomnumber = random.Next(1, 5);
+        }
+        // RANDOM MOVE PATTERN FOR MONSTER
+        public void MovePattern2()
+        {
+            if (LocationY > 0)
             {
-                LocationX = LocationX - speed;
-                if (LocationX < 100)
-                    move = 0;
-                    }
+                if (randomnumber == 1)  // UP
+                {
+                    LocationY = LocationY - speed;
+                }
+            }
+            if (LocationX < 1280 - 66)
+            {
+                if (randomnumber == 2)  // RIGHT
+                {
+                    LocationX = LocationX + speed;
+                }
+            }
+            if (LocationY < 960 - 66)
+            {
+                if (randomnumber == 3)  // DOWN
+                {
+                    LocationY = LocationY + speed;
+                }
+            }
+            if (LocationX > 0)
+            {
+                if (randomnumber == 4)  // LEFT
+                {
+                    LocationX = LocationX - speed;
+                }
+            }
         }
         // DETECT
         // CHASE
