@@ -54,6 +54,7 @@ namespace SukkanaSisaan
         private DispatcherTimer monstertimer1;
         private DispatcherTimer monstertimer2;
         private DispatcherTimer randnumtimer;
+        private DispatcherTimer randnumtimer2;
 
         public Game_map_01()
         {
@@ -89,7 +90,7 @@ namespace SukkanaSisaan
            
             monster2 = new Monster
             {
-                LocationX = 300,
+                LocationX = 1000,
                 LocationY = 400
             };
            
@@ -153,10 +154,10 @@ namespace SukkanaSisaan
 
             //timer 2
             // randnum timer
-            randnumtimer = new DispatcherTimer();
-            randnumtimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 3);
-            randnumtimer.Tick += randnumtimer2_Tick;
-            randnumtimer.Start();
+            randnumtimer2 = new DispatcherTimer();
+            randnumtimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 4);
+            randnumtimer2.Tick += randnumtimer2_Tick;
+            randnumtimer2.Start();
 
             // monster timer
             monstertimer1 = new DispatcherTimer();
@@ -378,6 +379,7 @@ namespace SukkanaSisaan
            
                     switch (args.VirtualKey)
                     {
+                       
                         case VirtualKey.Up:
                             UpPressed = true;
                             break;
