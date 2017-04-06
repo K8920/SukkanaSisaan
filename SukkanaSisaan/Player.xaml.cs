@@ -33,7 +33,8 @@ namespace SukkanaSisaan
 
         public double LocationX { get; set; }
         public double LocationY { get; set; }
-
+        public double getposX;
+        public double getposY;
 
         public Player()
         {
@@ -43,28 +44,45 @@ namespace SukkanaSisaan
         // MOVEMENTS
         public void MoveUp()
         {
-            LocationY = LocationY - speed;
+            if (LocationY > 0)
+            {
+                LocationY = LocationY - speed;
+            }
         }
 
         public void MoveDown()
         {
-            LocationY = LocationY + speed;
+            if (LocationY < 960 - 50)
+            {
+                LocationY = LocationY + speed;
+            }
         }
 
         public void MoveLeft()
         {
-            LocationX = LocationX - speed;
+            if (LocationX > 0)
+            {
+                LocationX = LocationX - speed;
+            }
         }
 
         public void MoveRight()
         {
-            LocationX = LocationX + speed;
+            if (LocationX < 1280 - 50)
+            {
+                LocationX = LocationX + speed;
+            }
         }
 
         public void UpdatePlayer()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
+        }
+        public void GetPos()
+        {
+            getposX = LocationX;
+            getposY = LocationY;
         }
     }
 }

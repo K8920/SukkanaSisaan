@@ -25,7 +25,7 @@ namespace SukkanaSisaan
     {
         // monster
         private Monster monster;
-
+        private Monster monster2;
         // player
         private Player player;
         private Projectile projectile;
@@ -43,8 +43,12 @@ namespace SukkanaSisaan
         private bool ZPressed;
         private bool ProjectileActive = false;
 
+        // game timers
         private DispatcherTimer timer;
         private DispatcherTimer attTimer;
+        private DispatcherTimer monstertimer1;
+        private DispatcherTimer monstertimer2;
+        private DispatcherTimer randnumtimer;
 
         public Game_map_01()
         {
@@ -52,8 +56,14 @@ namespace SukkanaSisaan
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
 
-            // monster location
+            // monster starting location
             monster = new Monster
+            {
+                LocationX = 300,
+                LocationY = 400
+            };
+
+            monster2 = new Monster
             {
                 LocationX = 300,
                 LocationY = 400
@@ -61,6 +71,7 @@ namespace SukkanaSisaan
            
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
+            GameCanvas.Children.Add(monster2);
 
             // player location
             player = new Player
@@ -98,10 +109,55 @@ namespace SukkanaSisaan
             attTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             attTimer.Tick += attTimer_Tick;
 
-            // update player position
+            // randnum timer
+            randnumtimer = new DispatcherTimer();
+            randnumtimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 3);
+            randnumtimer.Tick += randnumtimer_Tick;
+            randnumtimer.Start();
+
+            //timer 2
+            // randnum timer
+            randnumtimer = new DispatcherTimer();
+            randnumtimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 3);
+            randnumtimer.Tick += randnumtimer2_Tick;
+            randnumtimer.Start();
+
+            // monster timer
+            monstertimer1 = new DispatcherTimer();
+            monstertimer1.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
+            monstertimer1.Tick += monstertimer1_Tick;
+            monstertimer1.Start();
+
+            // monster timer 2
+            monstertimer2 = new DispatcherTimer();
+            monstertimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
+            monstertimer2.Tick += monstertimer2_Tick;
+            monstertimer2.Start();
+
+            // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
             monster.UpdateMonster();
+            monster2.UpdateMonster();
+        }
+        // random number generated for monster movement
+        private void randnumtimer_Tick(object sender, object e)
+        {
+            monster.GenerateNumber();
+        }
+        private void randnumtimer2_Tick(object sender, object e)
+        {
+            monster2.GenerateNumber2();
+            
+        }
+        // monster random movement
+        private void monstertimer1_Tick(object sender, object e)
+        {
+            monster.MovePattern2();
+        }
+        private void monstertimer2_Tick(object sender, object e)
+        {
+            monster2.MovePattern2();
         }
 
         private void attTimer_Tick(object sender, object e)
@@ -160,9 +216,9 @@ namespace SukkanaSisaan
                     attTimer.Start();
                 }
             }
-            monster.MovePattern1();
             player.UpdatePlayer();
             monster.UpdateMonster();
+            monster2.UpdateMonster();
             if (ProjectileActive) projectile.UpdateProjectile();
 
             /* if (CollisionHappen == true)
@@ -183,6 +239,7 @@ namespace SukkanaSisaan
 
 
         }
+
         private void CheckCollision()
         {
             // player
