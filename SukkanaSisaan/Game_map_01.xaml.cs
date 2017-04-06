@@ -32,7 +32,6 @@ namespace SukkanaSisaan
         private Hits hits, hits2, hits3;
         private Projectile projectile;
         private Rock rock;
-        private Woods_1 woods_1;
 
         // canvas width and height
         private double CanvasWidth;

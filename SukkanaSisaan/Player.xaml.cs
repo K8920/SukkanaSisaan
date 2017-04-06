@@ -88,10 +88,5 @@ namespace SukkanaSisaan
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
         }
-        public void GetPos()
-        {
-            getposX = LocationX;
-            getposY = LocationY;
-        }
     }
 }

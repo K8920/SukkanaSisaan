@@ -120,9 +120,6 @@
     <Compile Include="Rock.xaml.cs">
       <DependentUpon>Rock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Woods_1.xaml.cs">
-      <DependentUpon>Woods_1.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -174,10 +171,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Woods_1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
