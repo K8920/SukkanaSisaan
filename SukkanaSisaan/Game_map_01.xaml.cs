@@ -100,7 +100,6 @@ namespace SukkanaSisaan
         {
             // moving
             CheckCollision();
-            player.UpdateLocation();
 
             if (UpPressed)
             {
