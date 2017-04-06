@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SukkanaSisaan.Projectile"
+    x:Class="SukkanaSisaan.Heart"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SukkanaSisaan"
@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle x:Name="AttackRectangle" Fill="Yellow" Height="50" Width="50" Stroke="Black"/>
+        <Rectangle x:Name="HeartTangle" Width="25" Height="25" Fill="Black"></Rectangle>
     </Grid>
 </UserControl>

@@ -29,36 +29,58 @@ namespace SukkanaSisaan
         // private DispatcherTimer timer;
 
         // private double 
-        private double speed = 10;
-
+        public double speed = 10;
+        public int health = 3;
+        public int arrow = 0;
         public double LocationX { get; set; }
         public double LocationY { get; set; }
-
+        public int PlayerFacing { get; set; }
+        // 0,1,2,3
 
         public Player()
         {
             this.InitializeComponent();
+            Width = 50;
+            Height = 50;
+            PlayerFacing = 2;
+        }
+
+        public Rect GetRect()
+        {
+            return new Rect(LocationX, LocationY, Width, Height);
         }
 
         // MOVEMENTS
         public void MoveUp()
         {
-            LocationY = LocationY - speed;
+            if (LocationY > 0)
+            {
+                LocationY = LocationY - speed;
+            }
         }
 
         public void MoveDown()
         {
-            LocationY = LocationY + speed;
+            if (LocationY < 960 - 50)
+            {
+                LocationY = LocationY + speed;
+            }
         }
 
         public void MoveLeft()
         {
-            LocationX = LocationX - speed;
+            if (LocationX > 0)
+            {
+                LocationX = LocationX - speed;
+            }
         }
 
         public void MoveRight()
         {
-            LocationX = LocationX + speed;
+            if (LocationX < 1280 - 50)
+            {
+                LocationX = LocationX + speed;
+            }
         }
 
         public void UpdatePlayer()

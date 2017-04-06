@@ -98,6 +98,12 @@
     <Compile Include="Game_map_01.xaml.cs">
       <DependentUpon>Game_map_01.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Heart.xaml.cs">
+      <DependentUpon>Heart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Hits.xaml.cs">
+      <DependentUpon>Hits.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +128,8 @@
     <None Include="SukkanaSisaan_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\grass.png" />
+    <Content Include="Assets\skull.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -137,6 +145,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Game_map_01.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Heart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Hits.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
