@@ -61,7 +61,7 @@ namespace SukkanaSisaan
             LocationX = LocationX + speed;
         }
 
-        public void UpdateLocation()
+        public void UpdatePlayer()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
