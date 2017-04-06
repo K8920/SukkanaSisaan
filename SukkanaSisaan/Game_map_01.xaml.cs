@@ -28,8 +28,11 @@ namespace SukkanaSisaan
         private Monster monster2;
         // player
         private Player player;
+        private List<Heart> hearts;
+        private Hits hits, hits2, hits3;
         private Projectile projectile;
         private Rock rock;
+        private Woods_1 woods_1;
 
         // canvas width and height
         private double CanvasWidth;
@@ -60,13 +63,32 @@ namespace SukkanaSisaan
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
 
-            // monster starting location
+            hearts = new List<Heart>();
+
+            int heartsCount = 3;
+            int xStartPos = 70;
+            int yStartPos = 30;
+            int step = 10;
+            for (int i = 0; i < heartsCount; i++)
+            {
+                int x = (50 + i * 30 + step) + xStartPos;
+                int y = (20 + step) + yStartPos;
+                Heart heart = new Heart
+                {
+                    LocationX = x,
+                    LocationY = y
+                };
+                hearts.Add(heart);
+                GameCanvas.Children.Add(heart);
+                heart.SetLocation();
+            }
+
             monster = new Monster
             {
                 LocationX = 300,
                 LocationY = 400
             };
-
+           
             monster2 = new Monster
             {
                 LocationX = 1000,
@@ -88,15 +110,27 @@ namespace SukkanaSisaan
             // solid object location
             rock = new Rock
             {
-                LocationX = GameCanvas.Width / 3,
-                LocationY = GameCanvas.Height / 3
+                LocationX = 100,
+                LocationY = 100
             };
-           
+            GameCanvas.Children.Add(rock);
+
+            woods_1 = new Woods_1
+            {
+                LeftLocationX = 0,
+                LeftLocationY = 0,
+                TopLocationX = 0,
+                TopLocationY = 0,
+                BottomLocationX = 0,
+                BottomLocationY = 0,
+                RightLocationX = 0,
+                RightLocationY = 0
+            };
+            GameCanvas.Children.Add(woods_1);
+            //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
-
-            // add test solid dwayne the rock johnson
-            GameCanvas.Children.Add(rock);
+            
 
             // key listeners
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
@@ -110,7 +144,7 @@ namespace SukkanaSisaan
 
             // attack timer
             attTimer = new DispatcherTimer();
-            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             attTimer.Tick += attTimer_Tick;
 
             // randnum timer
@@ -141,6 +175,7 @@ namespace SukkanaSisaan
             // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
+            woods_1.UpdateLocation();
             monster.UpdateMonster();
             monster2.UpdateMonster();
         }
@@ -177,27 +212,27 @@ namespace SukkanaSisaan
             CheckCollision();
             player.UpdatePlayer();
 
-            if (UpPressed && DownPressed == false)
+            if (UpPressed && ProjectileActive == false)
             {
-          
+                player.PlayerFacing = 0;
                 player.MoveUp();
             
             }
-            if (DownPressed && UpPressed == false)
+            if (DownPressed && ProjectileActive == false)
             {
-             
+                player.PlayerFacing = 2;
                 player.MoveDown();
 
             }
-            if (LeftPressed && RightPressed == false)
+            if (LeftPressed && ProjectileActive == false)
             {
-              
+                player.PlayerFacing = 3;
                 player.MoveLeft();
  
             }
-            if (RightPressed && LeftPressed == false)
+            if (RightPressed && ProjectileActive == false)
             {
-               
+                player.PlayerFacing = 1;
                 player.MoveRight();
  
             }
@@ -206,12 +241,46 @@ namespace SukkanaSisaan
             {
                 if (ProjectileActive == false)
                 {
-                    projectile = new Projectile
+                    player.health--;
+                    if (player.PlayerFacing == 0)
                     {
-                        LocationX = player.LocationX,
-                        LocationY = player.LocationY - 30
-                    };
-                    ProjectileActive = true;
+                        projectile = new Projectile
+                        {
+                            LocationX = player.LocationX,
+                            LocationY = player.LocationY - player.Height
+                        };
+                        ProjectileActive = true;
+                    }
+
+                    else if (player.PlayerFacing == 1)
+                    {
+                        projectile = new Projectile
+                        {
+                            LocationX = player.LocationX + player.Width,
+                            LocationY = player.LocationY
+                        };
+                        ProjectileActive = true;
+                    }
+
+                    else if (player.PlayerFacing == 2)
+                    {
+                        projectile = new Projectile
+                        {
+                            LocationX = player.LocationX,
+                            LocationY = player.LocationY + player.Height
+                        };
+                        ProjectileActive = true;
+                    }
+
+                    else if (player.PlayerFacing == 3)
+                    {
+                        projectile = new Projectile
+                        {
+                            LocationX = player.LocationX - player.Width,
+                            LocationY = player.LocationY
+                        };
+                        ProjectileActive = true;
+                    }
                     GameCanvas.Children.Add(projectile);
                     attTimer.Start();
                 }
@@ -243,11 +312,15 @@ namespace SukkanaSisaan
         private void CheckCollision()
         {
             // player
-            Rect r1 = new Rect(player.LocationX, player.LocationY, player.ActualHeight, player.ActualWidth);
+            Rect r1 = player.GetRect();
+            r1.Intersect(rock.GetRect());
             // rock
-            Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
-            r1.Intersect(r2);
+           //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
+           // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
             if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
+               //Rect woodsleft_1 = new Rect
+               //Rect woodsleft_1 = new Rect
+            //r1.Intersect(r2);
             {
                 UpPressed = false;
                 UpHit = true;
@@ -304,7 +377,7 @@ namespace SukkanaSisaan
         // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-
+           
                     switch (args.VirtualKey)
                     {
                        

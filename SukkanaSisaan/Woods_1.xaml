@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="SukkanaSisaan.Woods_1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SukkanaSisaan"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Rectangle x:Name="WoodsLeft" Width="50" Height="960" HorizontalAlignment="Left" Fill="Green" Stroke="Black"></Rectangle>
+        <Rectangle x:Name="WoodsRight" Width="50" Height="960" HorizontalAlignment="Right" Fill="Green" Stroke="Black"></Rectangle>
+        <Rectangle x:Name="WoodsTop" Width="1280" Height="50" Fill="Green" VerticalAlignment="Bottom" Stroke="Black"></Rectangle>
+        <Rectangle x:Name="WoodsBottom" Width="1280" Height="50" Fill="Green" VerticalAlignment="Top" Stroke="Black"></Rectangle>
+    </Grid>
+</Page>
