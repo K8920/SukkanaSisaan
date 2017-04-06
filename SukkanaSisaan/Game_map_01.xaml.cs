@@ -30,7 +30,6 @@ namespace SukkanaSisaan
         private Player player;
         private Projectile projectile;
         private Rock rock;
-        private bool CollisionHappen = false;
 
         // canvas width and height
         private double CanvasWidth;
@@ -122,33 +121,29 @@ namespace SukkanaSisaan
             CheckCollision();
             player.UpdatePlayer();
 
-            if (UpPressed)
+            if (UpPressed && DownPressed == false)
             {
-                //if (CollisionHappen == false)
+          
                 player.MoveUp();
-                //if (CollisionHappen == true)
-                //player.LocationY = player.LocationY + 20;
+            
             }
-            if (DownPressed)
+            if (DownPressed && UpPressed == false)
             {
-                //if (CollisionHappen == false)
+             
                 player.MoveDown();
-                //if (CollisionHappen == true)
-                // player.LocationY = player.LocationY - 20;
+
             }
-            if (LeftPressed)
+            if (LeftPressed && RightPressed == false)
             {
-                //if (CollisionHappen == false)
+              
                 player.MoveLeft();
-                //if (CollisionHappen == true)             
-                // player.LocationX = player.LocationX + 20;
+ 
             }
-            if (RightPressed)
+            if (RightPressed && LeftPressed == false)
             {
-                //if (CollisionHappen == false)
+               
                 player.MoveRight();
-                //if (CollisionHappen == true)                
-                //player.LocationX = player.LocationX - 20;
+ 
             }
             // Z KEY
             if (ZPressed)
@@ -195,30 +190,31 @@ namespace SukkanaSisaan
             // rock
             Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
             r1.Intersect(r2);
-            if (!r1.IsEmpty && UpPressed == true && DnHit == false)
+            if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
             {
                 UpPressed = false;
                 UpHit = true;
             }
-            else if (!r1.IsEmpty && DownPressed == true && UpHit == false)
+            if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
             {
                 DownPressed = false;
                 DnHit = true;
             }
-            else if (!r1.IsEmpty && LeftPressed == true && RiHit == false)
+            if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
             {
                 LeftPressed = false;
                 LeHit = true;
+             
             }
-            else if (!r1.IsEmpty && RightPressed == true && LeHit == false)
+            if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
             {
                 RightPressed = false;
                 RiHit = true;
+              
             }
                     
-            else if (r1.IsEmpty)
+            if (r1.IsEmpty)
             {
-                CollisionHappen = false;
                 UpHit = false;
                 DnHit = false;
                 LeHit = false;
