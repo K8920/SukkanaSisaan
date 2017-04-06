@@ -113,19 +113,6 @@ namespace SukkanaSisaan
                 LocationY = 100
             };
             GameCanvas.Children.Add(rock);
-
-            woods_1 = new Woods_1
-            {
-                LeftLocationX = 0,
-                LeftLocationY = 0,
-                TopLocationX = 0,
-                TopLocationY = 0,
-                BottomLocationX = 0,
-                BottomLocationY = 0,
-                RightLocationX = 0,
-                RightLocationY = 0
-            };
-            GameCanvas.Children.Add(woods_1);
             //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
@@ -174,7 +161,6 @@ namespace SukkanaSisaan
             // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
-            woods_1.UpdateLocation();
             monster.UpdateMonster();
             monster2.UpdateMonster();
         }
