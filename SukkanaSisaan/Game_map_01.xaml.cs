@@ -43,6 +43,11 @@ namespace SukkanaSisaan
         private bool ZPressed;
         private bool ProjectileActive = false;
 
+        private bool UpHit = false;
+        private bool DnHit = false;
+        private bool LeHit = false;
+        private bool RiHit = false;
+
         private DispatcherTimer timer;
         private DispatcherTimer attTimer;
 
@@ -119,31 +124,31 @@ namespace SukkanaSisaan
 
             if (UpPressed)
             {
-                if (CollisionHappen == false)
-                    player.MoveUp();
-                else if (CollisionHappen == true)
-                    player.LocationY = player.LocationY + 20;
+                //if (CollisionHappen == false)
+                player.MoveUp();
+                //if (CollisionHappen == true)
+                //player.LocationY = player.LocationY + 20;
             }
             if (DownPressed)
             {
-                if (CollisionHappen == false)
-                    player.MoveDown();
-                else if (CollisionHappen == true)
-                    player.LocationY = player.LocationY - 20;
+                //if (CollisionHappen == false)
+                player.MoveDown();
+                //if (CollisionHappen == true)
+                // player.LocationY = player.LocationY - 20;
             }
             if (LeftPressed)
             {
-                if (CollisionHappen == false)
-                    player.MoveLeft();
-                else if (CollisionHappen == true)
-                    player.LocationX = player.LocationX + 20;
+                //if (CollisionHappen == false)
+                player.MoveLeft();
+                //if (CollisionHappen == true)             
+                // player.LocationX = player.LocationX + 20;
             }
             if (RightPressed)
             {
-                if (CollisionHappen == false)
-                    player.MoveRight();
-                else if (CollisionHappen == true)
-                    player.LocationX = player.LocationX - 20;
+                //if (CollisionHappen == false)
+                player.MoveRight();
+                //if (CollisionHappen == true)                
+                //player.LocationX = player.LocationX - 20;
             }
             // Z KEY
             if (ZPressed)
@@ -190,15 +195,37 @@ namespace SukkanaSisaan
             // rock
             Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
             r1.Intersect(r2);
-            if (!r1.IsEmpty)
+            if (!r1.IsEmpty && UpPressed == true && DnHit == false)
             {
-                CollisionHappen = true;
+                UpPressed = false;
+                UpHit = true;
             }
+            else if (!r1.IsEmpty && DownPressed == true && UpHit == false)
+            {
+                DownPressed = false;
+                DnHit = true;
+            }
+            else if (!r1.IsEmpty && LeftPressed == true && RiHit == false)
+            {
+                LeftPressed = false;
+                LeHit = true;
+            }
+            else if (!r1.IsEmpty && RightPressed == true && LeHit == false)
+            {
+                RightPressed = false;
+                RiHit = true;
+            }
+                    
             else if (r1.IsEmpty)
             {
                 CollisionHappen = false;
+                UpHit = false;
+                DnHit = false;
+                LeHit = false;
+                RiHit = false;
             }
         }
+        
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -224,25 +251,26 @@ namespace SukkanaSisaan
         // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-           
-                switch (args.VirtualKey)
-                {
-                    case VirtualKey.Up:
-                        UpPressed = true;
-                        break;
-                    case VirtualKey.Down:
-                        DownPressed = true;
-                        break;
-                    case VirtualKey.Left:
-                        LeftPressed = true;
-                        break;
-                    case VirtualKey.Right:
-                        RightPressed = true;
-                        break;
-                    case VirtualKey.Z:
-                        ZPressed = true;
-                        break;
-            }
+
+                    switch (args.VirtualKey)
+                    {
+                        case VirtualKey.Up:
+                            UpPressed = true;
+                            break;
+                        case VirtualKey.Down:
+                            DownPressed = true;
+                            break;
+                        case VirtualKey.Left:
+                            LeftPressed = true;
+                            break;
+                        case VirtualKey.Right:
+                            RightPressed = true;
+                            break;
+                        case VirtualKey.Z:
+                            ZPressed = true;
+                            break;
+                    }
+                
             
         }
     }
