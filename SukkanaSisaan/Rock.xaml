@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle x:Name="PlayerRectangle" Fill="Blue" Height="80" Width="80" Stroke="Blue"/>
+        <Rectangle x:Name="RockRectangle1" Fill="Blue" Height="50" Width="50" Stroke="Blue"/>
     </Grid>
 </UserControl>

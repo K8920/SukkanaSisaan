@@ -17,12 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SukkanaSisaan
 {
-    public sealed partial class Rock : UserControl
+    public sealed partial class Rock2 : UserControl
     {
-        public double LocationX { get; set; }
-        public double LocationY { get; set; }
-
-        public Rock()
+        public Rock2()
         {
             this.InitializeComponent();
             Width = 50;

@@ -17,24 +17,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SukkanaSisaan
 {
-    public sealed partial class Rock : UserControl
+    public sealed partial class Hits : UserControl
     {
         public double LocationX { get; set; }
         public double LocationY { get; set; }
-
-        public Rock()
+        public Hits()
         {
             this.InitializeComponent();
-            Width = 50;
-            Height = 50;
+            Width = 15;
+            Height = 15;
         }
 
-        public Rect GetRect()
-        {
-            return new Rect(LocationX, LocationY, Width, Height);
-        }
-
-        public void UpdateLocation()
+        public void SetLocation()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
