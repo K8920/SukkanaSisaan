@@ -23,9 +23,10 @@ namespace SukkanaSisaan
     /// </summary>
     public sealed partial class Game_map_01 : Page
     {
-        // monster
+        // monster and NPC's
         private Monster monster;
         private Monster monster2;
+        private NPC npc1;
         // player
         private Player player;
         private List<Heart> hearts;
@@ -115,7 +116,16 @@ namespace SukkanaSisaan
                 LocationX = 200,
                 LocationY = 200
             };
-            
+
+            // npc location
+            npc1 = new NPC
+            {
+                LocationX = 1000,
+                LocationY = 700
+            };
+            npc1.UpdateNPC();
+            GameCanvas.Children.Add(npc1);
+
             GameCanvas.Children.Add(rock);
             //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
@@ -197,11 +207,12 @@ namespace SukkanaSisaan
         {
             monster.GenerateNumber();
         }
+
         private void randnumtimer2_Tick(object sender, object e)
         {
-            monster2.GenerateNumber2();
-            
+            monster2.GenerateNumber();
         }
+
         // monster random movement
         private void monstertimer1_Tick(object sender, object e)
         {
@@ -317,6 +328,17 @@ namespace SukkanaSisaan
             monster.UpdateMonster();
             monster2.UpdateMonster();
             if (ProjectileActive) projectile.UpdateProjectile();
+
+            // NPC dialogue
+            if (player.LocationX >= npc1.LocationX + 5 && player.LocationY >= npc1.LocationY + 5 || player.LocationX >= npc1.LocationX - 5 && player.LocationY >= npc1.LocationY - 5)
+            {
+                npc1.Dialogue();
+            }
+            else
+            {
+                npc1.EmptyDialogue();
+
+            }
 
             /* if (CollisionHappen == true)
              {

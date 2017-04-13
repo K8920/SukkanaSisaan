@@ -31,7 +31,6 @@ namespace SukkanaSisaan
         public double LocationX;
         public double LocationY;
         public int move = 0;
-        Random random = new Random();
         int randomnumber;
         public Monster()
         {
@@ -61,13 +60,10 @@ namespace SukkanaSisaan
         
         public void GenerateNumber()
         {
-           randomnumber = random.Next(1, 5);
-        }
-
-        public void GenerateNumber2()
-        {
+            Random random = new Random();
             randomnumber = random.Next(1, 5);
         }
+
         // RANDOM MOVE PATTERN FOR MONSTER
         public void MovePattern2()
         {
