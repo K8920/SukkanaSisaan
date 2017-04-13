@@ -25,11 +25,18 @@ namespace SukkanaSisaan
         public Projectile()
         {
             this.InitializeComponent();
+            Width = 50;
+            Height = 50;
         }
         public void UpdateProjectile()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
+        }
+
+        public Rect GetRect()
+        {
+            return new Rect(LocationX, LocationY, Width, Height);
         }
     }
 }

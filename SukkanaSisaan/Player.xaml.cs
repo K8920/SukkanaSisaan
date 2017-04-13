@@ -35,6 +35,7 @@ namespace SukkanaSisaan
         public double LocationX { get; set; }
         public double LocationY { get; set; }
         public int PlayerFacing { get; set; }
+        public bool Invulnerable = false;
         // 0,1,2,3
 
         public Player()
