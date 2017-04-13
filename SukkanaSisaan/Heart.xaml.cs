@@ -25,8 +25,8 @@ namespace SukkanaSisaan
         {
             this.InitializeComponent();
 
-            Width = 25;
-            Height = 25;
+            Width = 65;
+            Height = 60;
         }
         public void SetLocation()
         {

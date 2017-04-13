@@ -68,9 +68,9 @@ namespace SukkanaSisaan
             int xStartPos = 70;
             int yStartPos = 30;
             int step = 10;
-            for (int i = 0; i < heartsCount; i++)
+            /*for (int i = 0; i < heartsCount; i++)
             {
-                int x = (50 + i * 30 + step) + xStartPos;
+                int x = (50 + i * 71 + step) + xStartPos;
                 int y = (20 + step) + yStartPos;
                 Heart heart = new Heart
                 {
@@ -80,7 +80,7 @@ namespace SukkanaSisaan
                 hearts.Add(heart);
                 GameCanvas.Children.Add(heart);
                 heart.SetLocation();
-            }
+            } */
 
             monster = new Monster
             {
@@ -109,9 +109,10 @@ namespace SukkanaSisaan
             // solid object location
             rock = new Rock
             {
-                LocationX = 100,
-                LocationY = 100
+                LocationX = 200,
+                LocationY = 200
             };
+            
             GameCanvas.Children.Add(rock);
             //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
@@ -163,6 +164,19 @@ namespace SukkanaSisaan
             rock.UpdateLocation();
             monster.UpdateMonster();
             monster2.UpdateMonster();
+            for (int i = 0; i < heartsCount; i++)
+            {
+                int x = (50 + i * 71 + step) + xStartPos;
+                int y = (20 + step) + yStartPos;
+                Heart heart = new Heart
+                {
+                    LocationX = x,
+                    LocationY = y
+                };
+                hearts.Add(heart);
+                GameCanvas.Children.Add(heart);
+                heart.SetLocation();
+            }
         }
         // random number generated for monster movement
         private void randnumtimer_Tick(object sender, object e)

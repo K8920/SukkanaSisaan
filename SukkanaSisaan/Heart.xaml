@@ -10,6 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle x:Name="HeartTangle" Width="25" Height="25" Fill="Black"></Rectangle>
+        <Image Source="/assets/syden.png"></Image>
+        <Rectangle x:Name="MonsterRectangle" Width="65" Height="60"/>
     </Grid>
 </UserControl>

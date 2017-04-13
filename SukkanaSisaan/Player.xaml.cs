@@ -57,7 +57,7 @@ namespace SukkanaSisaan
             {
                 LocationY = LocationY - speed;
             }
-        }
+        } 
 
         public void MoveDown()
         {
