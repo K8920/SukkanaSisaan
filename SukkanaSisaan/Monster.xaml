@@ -10,7 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Image Source="/assets/skull.png"></Image>
-        <Rectangle x:Name="MonsterRectangle" Width="64" Height="64"/>
+        <Image Source="/assets/skull2.png"></Image>
+        <Rectangle x:Name="MonsterRectangle" Width="75" Height="90"/>
     </Grid>
 </UserControl>

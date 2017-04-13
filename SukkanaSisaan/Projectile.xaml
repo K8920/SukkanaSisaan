@@ -10,6 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Rectangle x:Name="AttackRectangle" Fill="Yellow" Height="50" Width="50" Stroke="Black"/>
+        <Image Source="/assets/sword.png"></Image>
+        <Rectangle x:Name="AttackRectangle" Width="95" Height="45"/>
     </Grid>
 </UserControl>

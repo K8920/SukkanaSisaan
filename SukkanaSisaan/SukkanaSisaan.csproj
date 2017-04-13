@@ -132,6 +132,8 @@
     <Content Include="Assets\grass.png" />
     <Content Include="Assets\rockt.png" />
     <Content Include="Assets\skull.png" />
+    <Content Include="Assets\skull2.png" />
+    <Content Include="Assets\sword.png" />
     <Content Include="Assets\syden.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
