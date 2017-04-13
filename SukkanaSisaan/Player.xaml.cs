@@ -88,5 +88,10 @@ namespace SukkanaSisaan
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
         }
+
+        public void DamagePlayer()
+        {
+            health = health - 1;
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace SukkanaSisaan
         private bool LeftPressed;
         private bool RightPressed;
         private bool ZPressed;
+        private bool XPressed;
         private bool ProjectileActive = false;
 
         private bool UpHit = false;
@@ -240,7 +241,6 @@ namespace SukkanaSisaan
             {
                 if (ProjectileActive == false)
                 {
-                    player.health--;
                     if (player.PlayerFacing == 0)
                     {
                         projectile = new Projectile
@@ -284,6 +284,16 @@ namespace SukkanaSisaan
                     attTimer.Start();
                 }
             }
+
+            // suicide squad
+            //if (XPressed)
+            //{
+            //    player.DamagePlayer();
+            //    if (player.health == 0)
+            //    {
+            //        Frame.Navigate(typeof(MainPage));
+            //    }
+            //}
             player.UpdatePlayer();
             monster.UpdateMonster();
             monster2.UpdateMonster();
@@ -370,34 +380,51 @@ namespace SukkanaSisaan
                 case VirtualKey.Z:
                     ZPressed = false;
                     break;
+                case VirtualKey.X:
+                    XPressed = false;
+                    break;
             }
         }
 
         // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-           
-                    switch (args.VirtualKey)
-                    {
+            switch (args.VirtualKey)
+            {
                        
-                        case VirtualKey.Up:
-                            UpPressed = true;
-                            break;
-                        case VirtualKey.Down:
-                            DownPressed = true;
-                            break;
-                        case VirtualKey.Left:
-                            LeftPressed = true;
-                            break;
-                        case VirtualKey.Right:
-                            RightPressed = true;
-                            break;
-                        case VirtualKey.Z:
-                            ZPressed = true;
-                            break;
+                case VirtualKey.Up:
+                    UpPressed = true;
+                    break;
+                case VirtualKey.Down:
+                    DownPressed = true;
+                    break;
+                case VirtualKey.Left:
+                    LeftPressed = true;
+                    break;
+                case VirtualKey.Right:
+                    RightPressed = true;
+                    break;
+                case VirtualKey.Z:
+                    ZPressed = true;
+                    break;
+                case VirtualKey.X:
+                    if (XPressed == false)
+                    {
+                        player.DamagePlayer();
+                        if (hearts.Count >= 1)
+                        {
+                            hearts.RemoveAt(hearts.Count - 1);
+                            GameCanvas.Children.RemoveAt(hearts.Count);
+                        };
+                        if (player.health == 0)
+
+                        {
+                            Frame.Navigate(typeof(MainPage));
+                        }
                     }
-                
-            
+                    XPressed = true;
+                    break;
+            }
         }
     }
 }
