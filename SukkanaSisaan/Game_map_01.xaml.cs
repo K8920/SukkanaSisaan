@@ -36,6 +36,8 @@ namespace SukkanaSisaan
         // canvas width and height
         private double CanvasWidth;
         private double CanvasHeight;
+        public double PosX;
+        public double PosY;
 
         private bool UpPressed;
         private bool DownPressed;
@@ -52,6 +54,7 @@ namespace SukkanaSisaan
 
         private DispatcherTimer timer;
         private DispatcherTimer attTimer;
+        private DispatcherTimer invTimer;
         private DispatcherTimer monstertimer1;
         private DispatcherTimer monstertimer2;
         private DispatcherTimer randnumtimer;
@@ -73,6 +76,7 @@ namespace SukkanaSisaan
                 LocationX = 1000,
                 LocationY = 400
             };
+            
             hearts = new List<Heart>();
 
             int heartsCount = 3;
@@ -92,9 +96,7 @@ namespace SukkanaSisaan
                 GameCanvas.Children.Add(heart);
                 heart.SetLocation();
             } 
-
             
-           
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
             GameCanvas.Children.Add(monster2);
@@ -134,6 +136,11 @@ namespace SukkanaSisaan
             attTimer = new DispatcherTimer();
             attTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             attTimer.Tick += attTimer_Tick;
+
+            //invulnerability timer
+            invTimer = new DispatcherTimer();
+            invTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            invTimer.Tick += invTimer_Tick;
 
             // randnum timer
             randnumtimer = new DispatcherTimer();
@@ -210,6 +217,12 @@ namespace SukkanaSisaan
             GameCanvas.Children.Remove(projectile);
             attTimer.Stop();
             ProjectileActive = false;
+        }
+
+        private void invTimer_Tick(object sender, object e)
+        {
+            invTimer.Stop();
+            player.Invulnerable = false;
         }
 
         private void Timer_Tick(object sender, object e)
@@ -320,14 +333,25 @@ namespace SukkanaSisaan
                  if (RightPressed) player.MoveRight();
              }
              */
-
-
         }
+
+        private void GetPos1()
+        {
+            PosX = monster.LocationX;
+            PosY = monster.LocationY;
+        }
+        //private void GetPos2()
+        //{
+        //    PosX = monster2.LocationX;
+        //    PosY = monster2.LocationY;
+        //}
 
         private void CheckCollision()
         {
             // player
             Rect r1 = player.GetRect();
+            Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+            Rect rMon2 = new Rect(monster2.LocationX, monster2.LocationY, monster.Width, monster.Height);
             r1.Intersect(rock.GetRect());
             // rock
            //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
@@ -364,6 +388,71 @@ namespace SukkanaSisaan
                 DnHit = false;
                 LeHit = false;
                 RiHit = false;
+            }
+
+            Rect r2 = player.GetRect();
+            r2.Intersect(rMon1);
+            if (!r2.IsEmpty)
+            {
+                if (player.Invulnerable == false)
+                {
+                    player.DamagePlayer();
+                    invTimer.Start();
+                    player.Invulnerable = true;
+                    if (hearts.Count >= 1)
+                    {
+                        hearts.RemoveAt(hearts.Count - 1);
+                        GameCanvas.Children.RemoveAt(hearts.Count);
+                    };
+                    if (player.health == 0)
+
+                    {
+                        Frame.Navigate(typeof(MainPage));
+                    }
+                }
+            }
+
+            Rect r3 = player.GetRect();
+            r3.Intersect(rMon2);
+            if (!r3.IsEmpty)
+            {
+                if (player.Invulnerable == false)
+                {
+                    player.DamagePlayer();
+                    invTimer.Start();
+                    player.Invulnerable = true;
+                    if (hearts.Count >= 1)
+                    {
+                        hearts.RemoveAt(hearts.Count - 1);
+                        GameCanvas.Children.RemoveAt(hearts.Count);
+                    };
+                    if (player.health == 0)
+
+                    {
+                        Frame.Navigate(typeof(MainPage));
+                    }
+                }
+            }
+            if(ProjectileActive == true)
+            {
+            Rect rSword1 = projectile.GetRect();
+            Rect rMon1_1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+            rSword1.Intersect(rMon1_1);
+            if (!rSword1.IsEmpty)
+                {
+                    GameCanvas.Children.Remove(monster);
+                }
+            }
+
+            if (ProjectileActive == true)
+            {
+                Rect rSword2 = projectile.GetRect();
+                Rect rMon2_1 = new Rect(monster2.LocationX, monster2.LocationY, monster.Width, monster.Height);
+                rSword2.Intersect(rMon2_1);
+                if (!rSword2.IsEmpty)
+                {
+                    GameCanvas.Children.Remove(monster2);
+                }
             }
         }
         

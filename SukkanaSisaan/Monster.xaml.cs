@@ -20,7 +20,7 @@ namespace SukkanaSisaan
     public sealed partial class Monster : UserControl
     {
         // Monster current health
-        public int health { get; set; }
+        public int health = 3;
         // Monster attack
         public int attack { get; set; }
         // Monster maxhealth
@@ -36,26 +36,29 @@ namespace SukkanaSisaan
         public Monster()
         {
             this.InitializeComponent();
+            Width = 70;
+            Height = 70;
         }
         // COLLISION
         // MOVEMENT
-      //  public void MovePattern1()
-      //  {
-      //     if (move == 0)
-      //     {
-      //         LocationX = LocationX + speed;
-      //         if (LocationX > 400)
-      //         move = 1;
-      //     }
-      // 
-      //         if (move == 1)
-      //     {
-      //         LocationX = LocationX - speed;
-      //         if (LocationX < 100)
-      //         move = 0;
-      //     }
-      //  }
+        //  public void MovePattern1()
+        //  {
+        //     if (move == 0)
+        //     {
+        //         LocationX = LocationX + speed;
+        //         if (LocationX > 400)
+        //         move = 1;
+        //     }
+        // 
+        //         if (move == 1)
+        //     {
+        //         LocationX = LocationX - speed;
+        //         if (LocationX < 100)
+        //         move = 0;
+        //     }
+        //  }
         // GENERATE RANDOM NUMBER
+        
         public void GenerateNumber()
         {
            randomnumber = random.Next(1, 5);
