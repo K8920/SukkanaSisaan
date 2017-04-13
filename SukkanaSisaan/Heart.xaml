@@ -11,6 +11,6 @@
 
     <Grid>
         <Image Source="/assets/syden.png"></Image>
-        <Rectangle x:Name="MonsterRectangle" Width="65" Height="60"/>
+        <Rectangle x:Name="HeartTangle" Width="65" Height="60"/>
     </Grid>
 </UserControl>

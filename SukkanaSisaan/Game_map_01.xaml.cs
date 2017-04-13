@@ -62,14 +62,24 @@ namespace SukkanaSisaan
             this.InitializeComponent();
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
+            monster = new Monster
+            {
+                LocationX = 300,
+                LocationY = 400
+            };
 
+            monster2 = new Monster
+            {
+                LocationX = 1000,
+                LocationY = 400
+            };
             hearts = new List<Heart>();
 
             int heartsCount = 3;
             int xStartPos = 70;
             int yStartPos = 30;
             int step = 10;
-            /*for (int i = 0; i < heartsCount; i++)
+            for (int i = 0; i < heartsCount; i++)
             {
                 int x = (50 + i * 71 + step) + xStartPos;
                 int y = (20 + step) + yStartPos;
@@ -81,19 +91,9 @@ namespace SukkanaSisaan
                 hearts.Add(heart);
                 GameCanvas.Children.Add(heart);
                 heart.SetLocation();
-            } */
+            } 
 
-            monster = new Monster
-            {
-                LocationX = 300,
-                LocationY = 400
-            };
-           
-            monster2 = new Monster
-            {
-                LocationX = 1000,
-                LocationY = 400
-            };
+            
            
             // add monster to the canvas
             GameCanvas.Children.Add(monster);
@@ -165,6 +165,12 @@ namespace SukkanaSisaan
             rock.UpdateLocation();
             monster.UpdateMonster();
             monster2.UpdateMonster();
+           /* hearts = new List<Heart>();
+
+            int heartsCount = 3;
+            int xStartPos = 70;
+            int yStartPos = 30;
+            int step = 10;
             for (int i = 0; i < heartsCount; i++)
             {
                 int x = (50 + i * 71 + step) + xStartPos;
@@ -177,7 +183,7 @@ namespace SukkanaSisaan
                 hearts.Add(heart);
                 GameCanvas.Children.Add(heart);
                 heart.SetLocation();
-            }
+            }*/
         }
         // random number generated for monster movement
         private void randnumtimer_Tick(object sender, object e)
