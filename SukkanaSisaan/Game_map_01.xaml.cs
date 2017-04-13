@@ -32,6 +32,7 @@ namespace SukkanaSisaan
         private Hits hits, hits2, hits3;
         private Projectile projectile;
         private Rock rock;
+        private Rock rock2;
 
         // canvas width and height
         private double CanvasWidth;
@@ -110,11 +111,17 @@ namespace SukkanaSisaan
             // solid object location
             rock = new Rock
             {
-                LocationX = 200,
-                LocationY = 200
+                LocationX = 399,
+                LocationY = 399
             };
-            
+            rock2 = new Rock
+            {
+                LocationX = 699,
+                LocationY = 699
+            };
+
             GameCanvas.Children.Add(rock);
+            GameCanvas.Children.Add(rock2);
             //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
@@ -163,6 +170,7 @@ namespace SukkanaSisaan
             // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
+            rock2.UpdateLocation();
             monster.UpdateMonster();
             monster2.UpdateMonster();
            /* hearts = new List<Heart>();
@@ -328,14 +336,15 @@ namespace SukkanaSisaan
         {
             // player
             Rect r1 = player.GetRect();
-            r1.Intersect(rock.GetRect());
+            Rect k1 = rock.GetRect();
+            
+            r1.Intersect(k1);
+            //r1.Intersect(k2);
             // rock
-           //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
-           // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
+            //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
+            // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
             if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
-               //Rect woodsleft_1 = new Rect
-               //Rect woodsleft_1 = new Rect
-            //r1.Intersect(r2);
+          
             {
                 UpPressed = false;
                 UpHit = true;
@@ -365,6 +374,41 @@ namespace SukkanaSisaan
                 LeHit = false;
                 RiHit = false;
             }
+          /*  Rect r2 = player.GetRect();
+            Rect k2 = rock2.GetRect();
+            r2.Intersect(k2);
+            if (!r2.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
+        
+            {
+                UpPressed = false;
+                UpHit = true;
+            }
+            if (!r2.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
+            {
+                DownPressed = false;
+                DnHit = true;
+            }
+            if (!r2.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
+            {
+                LeftPressed = false;
+                LeHit = true;
+
+            }
+            if (!r2.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
+            {
+                RightPressed = false;
+                RiHit = true;
+
+            }
+
+            if (r2.IsEmpty)
+            {
+                UpHit = false;
+                DnHit = false;
+                LeHit = false;
+                RiHit = false;
+            }*/
+
         }
         
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
