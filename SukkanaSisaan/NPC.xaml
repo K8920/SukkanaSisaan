@@ -11,6 +11,7 @@
 
     <Grid>
         <TextBlock x:Name="NpcTextBlock" Width="200" Height="100" Text="" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Ellipse x:Name="NpcRectangle" Width="50" Height="50" Stroke="Black" Fill="Green"></Ellipse>
+        <Image Source="/assets/Velhu.png" Width="64" Height="64"/>
+        <Rectangle x:Name="MonsterRectangle" Width="64" Height="64"/>
     </Grid>
 </UserControl>

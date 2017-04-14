@@ -139,6 +139,7 @@
     <Content Include="Assets\sword.png" />
     <Content Include="Assets\swordsheet.png" />
     <Content Include="Assets\syden.png" />
+    <Content Include="Assets\Velhu.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
