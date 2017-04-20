@@ -9,8 +9,20 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <Image Source="/assets/sword.png"></Image>
-        <Rectangle x:Name="AttackRectangle" Width="95" Height="45"/>
-    </Grid>
+    <Rectangle Width="100" Height="50">
+        <Rectangle.Fill>
+            <ImageBrush 
+                ImageSource="/assets/sword.png"
+                Stretch="None"
+                AlignmentX="Left"
+                AlignmentY="Top">
+                <ImageBrush.Transform>
+                    <TranslateTransform x:Name="SpriteSheetOffset"/>
+                </ImageBrush.Transform>
+            </ImageBrush>
+        </Rectangle.Fill>
+        <Rectangle.RenderTransform>
+            <RotateTransform x:Name="AttackRotate" Angle="0" CenterX="50" CenterY="25"/>
+        </Rectangle.RenderTransform>
+    </Rectangle>
 </UserControl>
