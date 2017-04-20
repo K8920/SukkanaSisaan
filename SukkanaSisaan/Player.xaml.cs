@@ -32,6 +32,7 @@ namespace SukkanaSisaan
         public double speed = 10;
         public int health = 3;
         public int arrow = 0;
+        public int score = 0;
         public double LocationX { get; set; }
         public double LocationY { get; set; }
         public int PlayerFacing { get; set; }
