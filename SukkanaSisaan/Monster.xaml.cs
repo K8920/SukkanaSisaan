@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,7 +27,7 @@ namespace SukkanaSisaan
         // Monster maxhealth
         private int healthMax;
         // Monster speed
-        public double speed = 10;
+        public double speed = 7;
         // Monster locations
         public double LocationX;
         public double LocationY;
@@ -35,8 +36,10 @@ namespace SukkanaSisaan
         public Monster()
         {
             this.InitializeComponent();
+
             Width = 70;
             Height = 70;
+
         }
         // COLLISION
         // MOVEMENT
@@ -60,8 +63,11 @@ namespace SukkanaSisaan
         
         public void GenerateNumber()
         {
-            Random random = new Random();
-            randomnumber = random.Next(1, 5);
+
+            randomnumber = IntUtil.Random(1, 5);
+
+
+            Debug.WriteLine(randomnumber);
         }
 
         // RANDOM MOVE PATTERN FOR MONSTER

@@ -31,6 +31,7 @@ namespace SukkanaSisaan
         // player
         private Player player;
         private List<Heart> hearts;
+        public List<Monster> monsters = new List<Monster>();
         private Hits hits, hits2, hits3;
         private Projectile projectile;
         private Rock rock;
@@ -72,22 +73,24 @@ namespace SukkanaSisaan
             CanvasHeight = GameCanvas.Height;
             //InitAudio();
             InitAudio_2();
-            monster = new Monster
-            {
-                LocationX = 300,
-                LocationY = 400
-            };
-
-            monster2 = new Monster
-            {
-                LocationX = 1000,
-                LocationY = 400
-            };
+           monster = new Monster
+           {
+               LocationX = 300,
+               LocationY = 400
+           };
+        
+        
+        
+           monster2 = new Monster
+           {
+               LocationX = 1000,
+               LocationY = 400
+           };
             
             hearts = new List<Heart>();
 
             int heartsCount = 3;
-            int xStartPos = 70;
+            int xStartPos = 0;
             int yStartPos = 30;
             int step = 10;
             for (int i = 0; i < heartsCount; i++)
@@ -102,9 +105,24 @@ namespace SukkanaSisaan
                 hearts.Add(heart);
                 GameCanvas.Children.Add(heart);
                 heart.SetLocation();
-            } 
-            
-            // add monster to the canvas
+            }
+
+            // List of monsters
+            monsters.Add(new Monster() { LocationX = 700, LocationY = 400 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+
+            foreach (Monster monster in monsters)
+            {
+                GameCanvas.Children.Add(monster);
+            }
+       
+           // Monster monster = monsters.ElementAt(0);
+           // add monster to the canvas
             GameCanvas.Children.Add(monster);
             GameCanvas.Children.Add(monster2);
 
@@ -136,7 +154,6 @@ namespace SukkanaSisaan
 
             // add player to the canvas
             GameCanvas.Children.Add(player);
-            
 
             // key listeners
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
@@ -164,13 +181,6 @@ namespace SukkanaSisaan
             randnumtimer.Tick += randnumtimer_Tick;
             randnumtimer.Start();
 
-            //timer 2
-            // randnum timer
-            randnumtimer2 = new DispatcherTimer();
-            randnumtimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 4);
-            randnumtimer2.Tick += randnumtimer2_Tick;
-            randnumtimer2.Start();
-
             // monster timer
             monstertimer1 = new DispatcherTimer();
             monstertimer1.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
@@ -191,19 +201,22 @@ namespace SukkanaSisaan
         }
 
         // random number generated for monster movement
+
         private void randnumtimer_Tick(object sender, object e)
         {
-            monster.GenerateNumber();
-        }
-
-        private void randnumtimer2_Tick(object sender, object e)
-        {
-            monster2.GenerateNumber();
+            foreach (Monster monster in monsters)
+            {
+                monster.GenerateNumber();
+            }
         }
 
         // monster random movement
         private void monstertimer1_Tick(object sender, object e)
         {
+            foreach (Monster monster in monsters)
+            {
+                monster.MovePattern2();
+            }
             monster.MovePattern2();
         }
         private void monstertimer2_Tick(object sender, object e)
@@ -310,6 +323,10 @@ namespace SukkanaSisaan
             player.UpdatePlayer();
             monster.UpdateMonster();
             monster2.UpdateMonster();
+            foreach (Monster monster in monsters)
+            {
+                monster.UpdateMonster();
+            }
             if (ProjectileActive) projectile.UpdateProjectile();
 
             // NPC dialogue
