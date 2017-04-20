@@ -71,7 +71,7 @@ namespace SukkanaSisaan
             this.InitializeComponent();
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
-            //InitAudio();
+            InitAudio();
             InitAudio_2();
            monster = new Monster
            {
@@ -123,8 +123,6 @@ namespace SukkanaSisaan
        
            // Monster monster = monsters.ElementAt(0);
            // add monster to the canvas
-            GameCanvas.Children.Add(monster);
-            GameCanvas.Children.Add(monster2);
 
             // player location
             player = new Player
@@ -196,8 +194,6 @@ namespace SukkanaSisaan
             // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
-            monster.UpdateMonster();
-            monster2.UpdateMonster();
         }
 
         // random number generated for monster movement
@@ -422,6 +418,7 @@ namespace SukkanaSisaan
                     if (player.health == 0)
 
                     {
+                        mediaElement.Stop();
                         Frame.Navigate(typeof(MainPage));
                     }
                 }
@@ -443,6 +440,7 @@ namespace SukkanaSisaan
                     };
                     if (player.health == 0)
                     {
+                        mediaElement.Stop();
                         Frame.Navigate(typeof(MainPage));
                     }
                 }
