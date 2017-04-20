@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -60,7 +61,9 @@ namespace SukkanaSisaan
         private DispatcherTimer randnumtimer;
         private DispatcherTimer randnumtimer2;
 
-       
+        private MediaElement mediaElement;
+        private MediaElement mediaElement_2;
+
 
         public Game_map_01()
         {
@@ -128,7 +131,6 @@ namespace SukkanaSisaan
             GameCanvas.Children.Add(npc1);
 
             GameCanvas.Children.Add(rock);
-            //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
 
@@ -144,7 +146,7 @@ namespace SukkanaSisaan
 
             // attack timer
             attTimer = new DispatcherTimer();
-            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
             attTimer.Tick += attTimer_Tick;
 
             //invulnerability timer
@@ -258,9 +260,10 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX,
-                            LocationY = player.LocationY - player.Height
+                            LocationX = player.LocationX-25,
+                            LocationY = player.LocationY - player.Height - 25
                         };
+                        projectile.Rotate(270);
                         ProjectileActive = true;
                     }
 
@@ -271,6 +274,7 @@ namespace SukkanaSisaan
                             LocationX = player.LocationX + player.Width,
                             LocationY = player.LocationY
                         };
+                        projectile.Rotate(0);
                         ProjectileActive = true;
                     }
 
@@ -278,9 +282,10 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX,
-                            LocationY = player.LocationY + player.Height
+                            LocationX = player.LocationX - 25,
+                            LocationY = player.LocationY + player.Height + 25
                         };
+                        projectile.Rotate(90);
                         ProjectileActive = true;
                     }
 
@@ -288,26 +293,18 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX - player.Width,
+                            LocationX = player.LocationX - player.Width*2,
                             LocationY = player.LocationY
                         };
+                        projectile.Rotate(180);
                         ProjectileActive = true;
                     }
                     GameCanvas.Children.Add(projectile);
                     attTimer.Start();
                 }
             }
-
-            // suicide squad
-            //if (XPressed)
-            //{
-            //    player.DamagePlayer();
-            //    if (player.health == 0)
-            //    {
-            //        Frame.Navigate(typeof(MainPage));
-            //    }
-            //}
-            player.UpdatePlayer();
+            
+        player.UpdatePlayer();
             foreach (Monster monster in monsters)
             {
                 monster.UpdateMonster();
@@ -340,6 +337,17 @@ namespace SukkanaSisaan
                  if (RightPressed) player.MoveRight();
              }
              */
+        }
+
+        private async void InitAudio()
+        {
+            // audios
+            mediaElement = new MediaElement();
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            StorageFile file = await folder.GetFileAsync("grass.mp3");
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            mediaElement.AutoPlay = true;
+            mediaElement.SetSource(stream, file.ContentType);
         }
 
         private void CheckCollision()
