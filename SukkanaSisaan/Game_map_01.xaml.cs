@@ -33,6 +33,8 @@ namespace SukkanaSisaan
         private Hits hits, hits2, hits3;
         private Projectile projectile;
         private Rock rock;
+        private int score;
+        private bool scoreup = false;
 
         // canvas width and height
         private double CanvasWidth;
@@ -76,7 +78,7 @@ namespace SukkanaSisaan
             {
                 LocationX = 1000,
                 LocationY = 400
-            };
+            };  
             
             hearts = new List<Heart>();
 
@@ -130,8 +132,8 @@ namespace SukkanaSisaan
             //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
-            
 
+          
             // key listeners
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
@@ -462,7 +464,11 @@ namespace SukkanaSisaan
             rSword1.Intersect(rMon1_1);
             if (!rSword1.IsEmpty)
                 {
-                    GameCanvas.Children.Remove(monster);
+                    GameCanvas.Children.Remove(monster);                  
+                    score = int.Parse(amountText.Text);
+                    score = score + 100;
+                    amountText.Text = score.ToString();
+                    
                 }
             }
 
@@ -474,6 +480,10 @@ namespace SukkanaSisaan
                 if (!rSword2.IsEmpty)
                 {
                     GameCanvas.Children.Remove(monster2);
+                    score = int.Parse(amountText.Text);
+                    score = score + 100;
+                    amountText.Text = score.ToString();
+                    
                 }
             }
         }
