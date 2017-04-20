@@ -31,7 +31,6 @@ namespace SukkanaSisaan
         // Monster locations
         public double LocationX;
         public double LocationY;
-        public int move = 0;
         int randomnumber;
         public Monster()
         {
@@ -41,32 +40,11 @@ namespace SukkanaSisaan
             Height = 70;
 
         }
-        // COLLISION
-        // MOVEMENT
-        //  public void MovePattern1()
-        //  {
-        //     if (move == 0)
-        //     {
-        //         LocationX = LocationX + speed;
-        //         if (LocationX > 400)
-        //         move = 1;
-        //     }
-        // 
-        //         if (move == 1)
-        //     {
-        //         LocationX = LocationX - speed;
-        //         if (LocationX < 100)
-        //         move = 0;
-        //     }
-        //  }
         // GENERATE RANDOM NUMBER
         
         public void GenerateNumber()
         {
-
             randomnumber = IntUtil.Random(1, 5);
-
-
             Debug.WriteLine(randomnumber);
         }
 

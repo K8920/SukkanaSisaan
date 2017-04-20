@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,9 +24,6 @@ namespace SukkanaSisaan
     /// </summary>
     public sealed partial class Game_map_01 : Page
     {
-        // monster and NPC's
-        private Monster monster;
-        private Monster monster2;
         private NPC npc1;
         // player
         private Player player;
@@ -63,8 +60,7 @@ namespace SukkanaSisaan
         private DispatcherTimer randnumtimer;
         private DispatcherTimer randnumtimer2;
 
-        private MediaElement mediaElement;
-        private MediaElement mediaElement_2;
+       
 
         public Game_map_01()
         {
@@ -72,21 +68,6 @@ namespace SukkanaSisaan
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
             InitAudio();
-            InitAudio_2();
-           monster = new Monster
-           {
-               LocationX = 300,
-               LocationY = 400
-           };
-        
-        
-        
-           monster2 = new Monster
-           {
-               LocationX = 1000,
-               LocationY = 400
-           };
-            
             hearts = new List<Heart>();
 
             int heartsCount = 3;
@@ -108,13 +89,13 @@ namespace SukkanaSisaan
             }
 
             // List of monsters
-            monsters.Add(new Monster() { LocationX = 700, LocationY = 400 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
+            monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
+            monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
+            monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
+            monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
 
             foreach (Monster monster in monsters)
             {
@@ -122,8 +103,6 @@ namespace SukkanaSisaan
             }
        
            // Monster monster = monsters.ElementAt(0);
-           // add monster to the canvas
-
             // player location
             player = new Player
             {
@@ -149,7 +128,7 @@ namespace SukkanaSisaan
             GameCanvas.Children.Add(npc1);
 
             GameCanvas.Children.Add(rock);
-
+            //GameCanvas.Children.Add(woods_1);
             // add player to the canvas
             GameCanvas.Children.Add(player);
 
@@ -165,7 +144,7 @@ namespace SukkanaSisaan
 
             // attack timer
             attTimer = new DispatcherTimer();
-            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
+            attTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             attTimer.Tick += attTimer_Tick;
 
             //invulnerability timer
@@ -185,17 +164,29 @@ namespace SukkanaSisaan
             monstertimer1.Tick += monstertimer1_Tick;
             monstertimer1.Start();
 
-            // monster timer 2
-            monstertimer2 = new DispatcherTimer();
-            monstertimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
-            monstertimer2.Tick += monstertimer2_Tick;
-            monstertimer2.Start();
-
             // update position
             player.UpdatePlayer();
             rock.UpdateLocation();
-        }
+           /* hearts = new List<Heart>();
 
+            int heartsCount = 3;
+            int xStartPos = 70;
+            int yStartPos = 30;
+            int step = 10;
+            for (int i = 0; i < heartsCount; i++)
+            {
+                int x = (50 + i * 71 + step) + xStartPos;
+                int y = (20 + step) + yStartPos;
+                Heart heart = new Heart
+                {
+                    LocationX = x,
+                    LocationY = y
+                };
+                hearts.Add(heart);
+                GameCanvas.Children.Add(heart);
+                heart.SetLocation();
+            }*/
+        }
         // random number generated for monster movement
 
         private void randnumtimer_Tick(object sender, object e)
@@ -213,11 +204,6 @@ namespace SukkanaSisaan
             {
                 monster.MovePattern2();
             }
-            monster.MovePattern2();
-        }
-        private void monstertimer2_Tick(object sender, object e)
-        {
-            monster2.MovePattern2();
         }
 
         private void attTimer_Tick(object sender, object e)
@@ -235,8 +221,7 @@ namespace SukkanaSisaan
 
         private void Timer_Tick(object sender, object e)
         {
-            // moving with arrows
-            // 0 = up, 1 = right, 2 = down, 3 = left
+            // moving
             CheckCollision();
             player.UpdatePlayer();
 
@@ -244,26 +229,26 @@ namespace SukkanaSisaan
             {
                 player.PlayerFacing = 0;
                 player.MoveUp();
+            
             }
-
-            if (RightPressed && ProjectileActive == false)
-            {
-                player.PlayerFacing = 1;
-                player.MoveRight();
-            }
-
             if (DownPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 2;
                 player.MoveDown();
-            }
 
+            }
             if (LeftPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 3;
                 player.MoveLeft();
+ 
             }
-            
+            if (RightPressed && ProjectileActive == false)
+            {
+                player.PlayerFacing = 1;
+                player.MoveRight();
+ 
+            }
             // Z KEY
             if (ZPressed)
             {
@@ -273,10 +258,9 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX - player.Width/2,
-                            LocationY = player.LocationY - player.Height-25
+                            LocationX = player.LocationX,
+                            LocationY = player.LocationY - player.Height
                         };
-                        projectile.Rotate(270);
                         ProjectileActive = true;
                     }
 
@@ -287,7 +271,6 @@ namespace SukkanaSisaan
                             LocationX = player.LocationX + player.Width,
                             LocationY = player.LocationY
                         };
-                        projectile.Rotate(0);
                         ProjectileActive = true;
                     }
 
@@ -295,10 +278,9 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX - player.Width/2,
-                            LocationY = player.LocationY + player.Height+25
+                            LocationX = player.LocationX,
+                            LocationY = player.LocationY + player.Height
                         };
-                        projectile.Rotate(90);
                         ProjectileActive = true;
                     }
 
@@ -306,19 +288,26 @@ namespace SukkanaSisaan
                     {
                         projectile = new Projectile
                         {
-                            LocationX = player.LocationX - player.Width*2,
+                            LocationX = player.LocationX - player.Width,
                             LocationY = player.LocationY
                         };
-                        projectile.Rotate(180);
                         ProjectileActive = true;
                     }
                     GameCanvas.Children.Add(projectile);
                     attTimer.Start();
                 }
             }
+
+            // suicide squad
+            //if (XPressed)
+            //{
+            //    player.DamagePlayer();
+            //    if (player.health == 0)
+            //    {
+            //        Frame.Navigate(typeof(MainPage));
+            //    }
+            //}
             player.UpdatePlayer();
-            monster.UpdateMonster();
-            monster2.UpdateMonster();
             foreach (Monster monster in monsters)
             {
                 monster.UpdateMonster();
@@ -333,64 +322,59 @@ namespace SukkanaSisaan
             else
             {
                 npc1.EmptyDialogue();
+
             }
-        }
-        
-        private void GetPos1()
-        {
-            PosX = monster.LocationX;
-            PosY = monster.LocationY;
-        }
 
-        private async void InitAudio()
-        {
-            // audios
-            mediaElement = new MediaElement();
-            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
-            StorageFile file = await folder.GetFileAsync("grass.mp3");
-            var stream = await file.OpenAsync(FileAccessMode.Read);
-            mediaElement.AutoPlay = true;
-            mediaElement.SetSource(stream, file.ContentType);
-        }
-        private async void InitAudio_2()
-        {
-            // audios
-            mediaElement_2 = new MediaElement();
-            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
-            StorageFile file = await folder.GetFileAsync("tada.wav");
-            var stream = await file.OpenAsync(FileAccessMode.Read);
-            mediaElement_2.AutoPlay = false;
-            mediaElement_2.SetSource(stream, file.ContentType);
-        }
+            /* if (CollisionHappen == true)
+             {
+                 UpPressed = false;
+                 DownPressed = false;
+                 LeftPressed = false;
+                 RightPressed = false;
 
+
+            // POISTA
+             if (UpPressed) player.MoveUp();
+                 if (DownPressed) player.MoveDown();
+                 if (LeftPressed) player.MoveLeft();
+                 if (RightPressed) player.MoveRight();
+             }
+             */
+        }
 
         private void CheckCollision()
         {
             // player
-            Rect r1 = player.GetRect();
-            Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
-            Rect rMon2 = new Rect(monster2.LocationX, monster2.LocationY, monster.Width, monster.Height);
-            r1.Intersect(rock.GetRect());
-            if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
-            {
-                UpPressed = false;
-                UpHit = true;
-            }
-            if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
-            {
-                DownPressed = false;
-                DnHit = true;
-            }
-            if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
-            {
-                LeftPressed = false;
-                LeHit = true;
-             
-            }
-            if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
-            {
-                RightPressed = false;
-                RiHit = true;
+          Rect r1 = player.GetRect();
+        //  Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+          r1.Intersect(rock.GetRect());
+          // rock
+         //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
+         // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
+          if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
+             //Rect woodsleft_1 = new Rect
+             //Rect woodsleft_1 = new Rect
+          //r1.Intersect(r2);
+          {
+              UpPressed = false;
+              UpHit = true;
+          }
+          if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
+          {
+              DownPressed = false;
+              DnHit = true;
+          }
+          if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
+          {
+              LeftPressed = false;
+              LeHit = true;
+           
+          }
+          if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
+          {
+              RightPressed = false;
+              RiHit = true;
+              
             }
                     
             if (r1.IsEmpty)
@@ -402,8 +386,7 @@ namespace SukkanaSisaan
             }
 
             Rect r2 = player.GetRect();
-            r2.Intersect(rMon1);
-            if (!r2.IsEmpty)
+            if (r2.IsEmpty)
             {
                 if (player.Invulnerable == false)
                 {
@@ -425,8 +408,7 @@ namespace SukkanaSisaan
             }
 
             Rect r3 = player.GetRect();
-            r3.Intersect(rMon2);
-            if (!r3.IsEmpty)
+            if (r3.IsEmpty)
             {
                 if (player.Invulnerable == false)
                 {
@@ -439,6 +421,7 @@ namespace SukkanaSisaan
                         GameCanvas.Children.RemoveAt(hearts.Count);
                     };
                     if (player.health == 0)
+
                     {
                         mediaElement.Stop();
                         Frame.Navigate(typeof(MainPage));
@@ -448,24 +431,15 @@ namespace SukkanaSisaan
             if(ProjectileActive == true)
             {
             Rect rSword1 = projectile.GetRect();
-            Rect rMon1_1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
-            rSword1.Intersect(rMon1_1);
-            if (!rSword1.IsEmpty)
+                foreach (Monster monster in monsters)
                 {
-                    GameCanvas.Children.Remove(monster);
-                    mediaElement_2.Play();
-                }
-            }
-
-            if (ProjectileActive == true)
-            {
-                Rect rSword2 = projectile.GetRect();
-                Rect rMon2_1 = new Rect(monster2.LocationX, monster2.LocationY, monster.Width, monster.Height);
-                rSword2.Intersect(rMon2_1);
-                if (!rSword2.IsEmpty)
-                {
-                    GameCanvas.Children.Remove(monster2);
-                    mediaElement_2.Play();
+                    Rect skull = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+                    rSword1.Intersect(skull);
+                    if (!rSword1.IsEmpty)
+                    {
+                        monsters.Remove(monster);
+                        GameCanvas.Children.Remove(monster);
+                    }
                 }
             }
         }
@@ -495,10 +469,12 @@ namespace SukkanaSisaan
             }
         }
 
+        // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
             {
+                       
                 case VirtualKey.Up:
                     UpPressed = true;
                     break;
@@ -524,8 +500,8 @@ namespace SukkanaSisaan
                             GameCanvas.Children.RemoveAt(hearts.Count);
                         };
                         if (player.health == 0)
+
                         {
-                            mediaElement.Stop();
                             Frame.Navigate(typeof(MainPage));
                         }
                     }
