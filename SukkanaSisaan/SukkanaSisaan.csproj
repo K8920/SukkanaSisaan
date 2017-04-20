@@ -102,6 +102,9 @@
     <Compile Include="Heart.xaml.cs">
       <DependentUpon>Heart.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HighScores.xaml.cs">
+      <DependentUpon>HighScores.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hits.xaml.cs">
       <DependentUpon>Hits.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\grass.png" />
+    <Content Include="Assets\medieval_animeme.png" />
+    <Content Include="Assets\nappiso.png" />
+    <Content Include="Assets\player2.png" />
     <Content Include="Assets\rockt.png" />
     <Content Include="Assets\skull.png" />
     <Content Include="Assets\skull2.png" />
@@ -159,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Heart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HighScores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
