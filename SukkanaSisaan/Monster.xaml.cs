@@ -35,13 +35,18 @@ namespace SukkanaSisaan
         public Monster()
         {
             this.InitializeComponent();
-
-            Width = 70;
-            Height = 70;
+            Width = 64;
+            Height = 64;
 
         }
+
+        public Rect GetRect()
+        {
+            return new Rect(LocationX, LocationY, Width, Height);
+        }
+
         // GENERATE RANDOM NUMBER
-        
+
         public void GenerateNumber()
         {
             randomnumber = IntUtil.Random(1, 5);
@@ -80,8 +85,7 @@ namespace SukkanaSisaan
                 }
             }
         }
-        // DETECT
-        // CHASE
+
         // UPDATE MONSTER LOCATION
         public void UpdateMonster()
         {
