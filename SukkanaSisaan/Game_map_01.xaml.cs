@@ -467,15 +467,16 @@ namespace SukkanaSisaan
             }
             if(ProjectileActive == true)
             {
-            Rect rSword1 = projectile.GetRect();
+                Rect rSword1 = projectile.GetRect();
                 foreach (Monster monster in monsters)
                 {
-                    Rect skull = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+                    Rect skull = monster.GetRect();
                     rSword1.Intersect(skull);
                     if (!rSword1.IsEmpty)
                     {
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
+                        break;
                     }
                 }
             }
