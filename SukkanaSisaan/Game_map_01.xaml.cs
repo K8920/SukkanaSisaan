@@ -29,10 +29,10 @@ namespace SukkanaSisaan
         // player
         private Player player;
         private List<Heart> hearts;
-        public  List<Monster> monsters = new List<Monster>();
+        public List<Monster> monsters = new List<Monster>();
         private Hits hits, hits2, hits3;
         private Projectile projectile;
-        private Rock rock;
+        private List<Rock> rocks = new List<Rock>();
 
         // canvas width and height
         private double CanvasWidth;
@@ -57,7 +57,9 @@ namespace SukkanaSisaan
         private DispatcherTimer attTimer;
         private DispatcherTimer invTimer;
         private DispatcherTimer monstertimer1;
+        private DispatcherTimer monstertimer2;
         private DispatcherTimer randnumtimer;
+        private DispatcherTimer randnumtimer2;
 
         private MediaElement mediaElement;
         private MediaElement mediaElement_2;
@@ -98,11 +100,20 @@ namespace SukkanaSisaan
             monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
             monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
 
-             foreach (Monster monster in monsters)
-             {
-                 GameCanvas.Children.Add(monster);
-             }
+            // List of rocks
+            rocks.Add(new Rock() { LocationX = 200, LocationY = 200 });
+            rocks.Add(new Rock() { LocationX = 600, LocationY = 600 });
 
+            foreach (Monster monster in monsters)
+            {
+                GameCanvas.Children.Add(monster);
+            }
+            foreach (Rock rock in rocks)
+            {
+                GameCanvas.Children.Add(rock);
+            }
+       
+           // Monster monster = monsters.ElementAt(0);
             // player location
             player = new Player
             {
@@ -112,11 +123,11 @@ namespace SukkanaSisaan
             player.UpdatePlayer();
 
             // solid object location
-            rock = new Rock
+            /*rock = new Rock
             {
                 LocationX = 200,
                 LocationY = 200
-            };
+            };*/
 
             // npc location
             npc1 = new NPC
@@ -127,7 +138,6 @@ namespace SukkanaSisaan
             npc1.UpdateNPC();
             GameCanvas.Children.Add(npc1);
 
-            GameCanvas.Children.Add(rock);
             // add player to the canvas
             GameCanvas.Children.Add(player);
 
@@ -165,7 +175,10 @@ namespace SukkanaSisaan
 
             // update position
             player.UpdatePlayer();
-            rock.UpdateLocation();
+            foreach (Rock rock in rocks)
+            {
+                rock.UpdateLocation();
+            }
            /* hearts = new List<Heart>();
 
             int heartsCount = 3;
@@ -228,25 +241,37 @@ namespace SukkanaSisaan
             {
                 player.PlayerFacing = 0;
                 player.MoveUp();
+                DownPressed = false;
+                LeftPressed = false;
+                RightPressed = false;
             
             }
             if (DownPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 2;
                 player.MoveDown();
+                UpPressed = false;
+                LeftPressed = false;
+                RightPressed = false;
 
             }
             if (LeftPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 3;
                 player.MoveLeft();
- 
+                UpPressed = false;
+                DownPressed = false;
+                RightPressed = false;
+
             }
             if (RightPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 1;
                 player.MoveRight();
- 
+                UpPressed = false;
+                LeftPressed = false;
+                DownPressed = false;
+
             }
             // Z KEY
             if (ZPressed)
@@ -316,7 +341,24 @@ namespace SukkanaSisaan
             else
             {
                 npc1.EmptyDialogue();
+
             }
+
+            /* if (CollisionHappen == true)
+             {
+                 UpPressed = false;
+                 DownPressed = false;
+                 LeftPressed = false;
+                 RightPressed = false;
+
+
+            // POISTA
+             if (UpPressed) player.MoveUp();
+                 if (DownPressed) player.MoveDown();
+                 if (LeftPressed) player.MoveLeft();
+                 if (RightPressed) player.MoveRight();
+             }
+             */
         }
 
         private async void InitAudio()
@@ -333,42 +375,51 @@ namespace SukkanaSisaan
         private void CheckCollision()
         {
             // player
-          Rect r1 = player.GetRect();
-         //Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
-          r1.Intersect(rock.GetRect());
-          // rock
-         //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
-         // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
-          if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
-          //r1.Intersect(r2);
-          {
-              UpPressed = false;
-              UpHit = true;
-          }
-          if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
-          {
-              DownPressed = false;
-              DnHit = true;
-          }
-          if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
-          {
-              LeftPressed = false;
-              LeHit = true;
            
-          }
-          if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
-          {
-              RightPressed = false;
-              RiHit = true;
-              
-            }
-                    
-            if (r1.IsEmpty)
+            //  Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+            foreach (Rock rock in rocks)
             {
-                UpHit = false;
-                DnHit = false;
-                LeHit = false;
-                RiHit = false;
+                Rect r1 = player.GetRect();
+                r1.Intersect(rock.GetRect());
+
+                // rock
+                //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
+                // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
+                if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
+                //Rect woodsleft_1 = new Rect
+                //Rect woodsleft_1 = new Rect
+                //r1.Intersect(r2);
+                {
+                    UpPressed = false;
+                    UpHit = true;
+                    player.LocationY = player.LocationY + 15;
+                }
+                if (!r1.IsEmpty && DownPressed == true && UpHit == false && LeHit == false && RiHit == false)
+                {
+                    DownPressed = false;
+                    DnHit = true;
+                    player.LocationY = player.LocationY - 15;
+                }
+                if (!r1.IsEmpty && LeftPressed == true && UpHit == false && DnHit == false && RiHit == false)
+                {
+                    LeftPressed = false;
+                    LeHit = true;
+                    player.LocationX = player.LocationX + 15;
+                }
+                if (!r1.IsEmpty && RightPressed == true && UpHit == false && DnHit == false && LeHit == false)
+                {
+                    RightPressed = false;
+                    RiHit = true;
+                    player.LocationX = player.LocationX - 15;
+                }
+
+                if (r1.IsEmpty)
+                {
+                    UpHit = false;
+                    DnHit = false;
+                    LeHit = false;
+                    RiHit = false;
+                }
             }
 
             Rect r2 = player.GetRect();
@@ -419,17 +470,17 @@ namespace SukkanaSisaan
             Rect rSword1 = projectile.GetRect();
                 foreach (Monster monster in monsters)
                 {
-                    Rect skull = monster.GetRect();
+                    Rect skull = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
                     rSword1.Intersect(skull);
                     if (!rSword1.IsEmpty)
                     {
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
-                        break;
                     }
                 }
             }
         }
+        
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -455,6 +506,7 @@ namespace SukkanaSisaan
             }
         }
 
+        // lul lul
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
