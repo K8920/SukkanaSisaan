@@ -465,11 +465,11 @@ namespace SukkanaSisaan
                     }
                 }
             }
-            if(ProjectileActive == true)
+            if (ProjectileActive == true)
             {
-                Rect rSword1 = projectile.GetRect();
                 foreach (Monster monster in monsters)
                 {
+                    Rect rSword1 = projectile.GetRect();
                     Rect skull = monster.GetRect();
                     rSword1.Intersect(skull);
                     if (!rSword1.IsEmpty)
