@@ -9,7 +9,9 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="/assets/medieval_animeme.png" Width="1280" Height="960"></Image>
-        <Button x:Name="PlayButton" Content="Play" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="PlayButton_Click"/>
-        <Button x:Name="ScoreButton" Content="High Scores" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ScoreButton_Click" Margin="130,341,130,267"/>
+        <Image Source="/assets/nappiso.png" Width="100" Height="33" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="130,303,130,304"></Image>
+        <Image Source="/assets/nappiscore.png" Width="100" Height="33" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="130,341,130,267"></Image>
+        <Button x:Name="PlayButton" Content=" " Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="PlayButton_Click"/>
+        <Button x:Name="ScoreButton" Content=" " Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ScoreButton_Click" Margin="130,341,130,267"/>
     </Grid>
 </Page>

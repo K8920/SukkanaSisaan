@@ -9,6 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="/assets/medieval_animeme.png" Width="1280" Height="960"></Image>
-        <Button x:Name="BackButton" Content="Back to main" Width="100" Click="BackButton_Click" Margin="250,598,10,10"/>
+        <Image Source="/assets/nappiback.png" Width="100" Height="33" Margin="250,597,10,10"></Image>
+        <Button x:Name="BackButton" Content=" " Width="100" Click="BackButton_Click" Margin="250,597,0,11"/>
     </Grid>
 </Page>

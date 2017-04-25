@@ -140,6 +140,8 @@
     <Content Include="Assets\grass.mp3" />
     <Content Include="Assets\grass.png" />
     <Content Include="Assets\medieval_animeme.png" />
+    <Content Include="Assets\nappiback.png" />
+    <Content Include="Assets\nappiscore.png" />
     <Content Include="Assets\nappiso.png" />
     <Content Include="Assets\player2.png" />
     <Content Include="Assets\rockt.png" />
