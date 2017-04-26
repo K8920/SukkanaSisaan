@@ -9,11 +9,10 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Rectangle Width="100" Height="50">
+    <Rectangle Width="80" Height="50">
         <Rectangle.Fill>
             <ImageBrush 
                 ImageSource="/assets/sword.png"
-                Stretch="None"
                 AlignmentX="Left"
                 AlignmentY="Top">
                 <ImageBrush.Transform>
@@ -22,7 +21,7 @@
             </ImageBrush>
         </Rectangle.Fill>
         <Rectangle.RenderTransform>
-            <RotateTransform x:Name="AttackRotate" Angle="0" CenterX="50" CenterY="25"/>
+            <RotateTransform x:Name="AttackRotate" Angle="0" CenterX="40" CenterY="25"/>
         </Rectangle.RenderTransform>
     </Rectangle>
 </UserControl>
