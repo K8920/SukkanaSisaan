@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,51 +21,38 @@ namespace SukkanaSisaan
     public sealed partial class Monster : UserControl
     {
         // Monster current health
-        public int health { get; set; }
+        public int health = 3;
         // Monster attack
         public int attack { get; set; }
         // Monster maxhealth
         private int healthMax;
         // Monster speed
-        public double speed = 10;
+        public double speed = 7;
         // Monster locations
         public double LocationX;
         public double LocationY;
-        public int move = 0;
-        Random random = new Random();
         int randomnumber;
         public Monster()
         {
             this.InitializeComponent();
-        }
-        // COLLISION
-        // MOVEMENT
-      //  public void MovePattern1()
-      //  {
-      //     if (move == 0)
-      //     {
-      //         LocationX = LocationX + speed;
-      //         if (LocationX > 400)
-      //         move = 1;
-      //     }
-      // 
-      //         if (move == 1)
-      //     {
-      //         LocationX = LocationX - speed;
-      //         if (LocationX < 100)
-      //         move = 0;
-      //     }
-      //  }
-        // GENERATE RANDOM NUMBER
-        public void GenerateNumber()
-        {
-           randomnumber = random.Next(1, 5);
+            Width = 64;
+            Height = 64;
+
         }
 
-        public void GenerateNumber2()
+        public Rect GetRect()
         {
-            randomnumber = random.Next(1, 5);
+            return new Rect(LocationX, LocationY, Width, Height);
         }
+
+        // GENERATE RANDOM NUMBER
+
+        public void GenerateNumber()
+        {
+            randomnumber = IntUtil.Random(1, 5);
+            //Debug.WriteLine(randomnumber);
+        }
+
         // RANDOM MOVE PATTERN FOR MONSTER
         public void MovePattern2()
         {
@@ -97,13 +85,16 @@ namespace SukkanaSisaan
                 }
             }
         }
-        // DETECT
-        // CHASE
+
         // UPDATE MONSTER LOCATION
         public void UpdateMonster()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
+        }
+        public void SpeedUp()
+        {
+         //   Speed = Speed + 20;
         }
     }
 }

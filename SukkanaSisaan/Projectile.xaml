@@ -9,7 +9,19 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <Rectangle x:Name="AttackRectangle" Fill="Yellow" Height="50" Width="50" Stroke="Black"/>
-    </Grid>
+    <Rectangle Width="80" Height="50">
+        <Rectangle.Fill>
+            <ImageBrush 
+                ImageSource="/assets/sword.png"
+                AlignmentX="Left"
+                AlignmentY="Top">
+                <ImageBrush.Transform>
+                    <TranslateTransform x:Name="SpriteSheetOffset"/>
+                </ImageBrush.Transform>
+            </ImageBrush>
+        </Rectangle.Fill>
+        <Rectangle.RenderTransform>
+            <RotateTransform x:Name="AttackRotate" Angle="0" CenterX="40" CenterY="25"/>
+        </Rectangle.RenderTransform>
+    </Rectangle>
 </UserControl>

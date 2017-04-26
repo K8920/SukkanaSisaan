@@ -19,17 +19,31 @@ namespace SukkanaSisaan
 {
     public sealed partial class Projectile : UserControl
     {
+        public double Angle = 0;
+
         public double LocationX { get; set; }
         public double LocationY { get; set; }
 
         public Projectile()
         {
             this.InitializeComponent();
+            Width = 100;
+            Height = 50;
         }
         public void UpdateProjectile()
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
+        }
+
+        public void Rotate(int angle)
+        {
+            AttackRotate.Angle = angle;
+        }
+
+        public Rect GetRect()
+        {
+            return new Rect(LocationX, LocationY, Width, Height);
         }
     }
 }

@@ -28,6 +28,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -95,20 +96,31 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Audio.cs" />
+    <Compile Include="GameOver.xaml.cs">
+      <DependentUpon>GameOver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game_map_01.xaml.cs">
       <DependentUpon>Game_map_01.xaml</DependentUpon>
     </Compile>
     <Compile Include="Heart.xaml.cs">
       <DependentUpon>Heart.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HighScores.xaml.cs">
+      <DependentUpon>HighScores.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hits.xaml.cs">
       <DependentUpon>Hits.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntUtil.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Monster.xaml.cs">
       <DependentUpon>Monster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NPC.xaml.cs">
+      <DependentUpon>NPC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
@@ -128,8 +140,23 @@
     <None Include="SukkanaSisaan_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\grass.mp3" />
     <Content Include="Assets\grass.png" />
+    <Content Include="Assets\iskill.wav" />
+    <Content Include="Assets\medieval_animeme.png" />
+    <Content Include="Assets\medieval_gameoverroror.png" />
+    <Content Include="Assets\nappiback.png" />
+    <Content Include="Assets\nappiscore.png" />
+    <Content Include="Assets\nappiso.png" />
+    <Content Include="Assets\player2.png" />
+    <Content Include="Assets\rockt.png" />
     <Content Include="Assets\skull.png" />
+    <Content Include="Assets\skull2.png" />
+    <Content Include="Assets\sword.png" />
+    <Content Include="Assets\swordsheet.png" />
+    <Content Include="Assets\syden.png" />
+    <Content Include="Assets\tada.wav" />
+    <Content Include="Assets\Velhu.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -144,11 +171,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GameOver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Game_map_01.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Heart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HighScores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +196,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Monster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NPC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

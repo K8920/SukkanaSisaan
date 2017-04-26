@@ -32,9 +32,11 @@ namespace SukkanaSisaan
         public double speed = 10;
         public int health = 3;
         public int arrow = 0;
+        public int score = 0;
         public double LocationX { get; set; }
         public double LocationY { get; set; }
         public int PlayerFacing { get; set; }
+        public bool Invulnerable = false;
         // 0,1,2,3
 
         public Player()
@@ -57,7 +59,7 @@ namespace SukkanaSisaan
             {
                 LocationY = LocationY - speed;
             }
-        }
+        } 
 
         public void MoveDown()
         {
@@ -87,6 +89,11 @@ namespace SukkanaSisaan
         {
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
+        }
+
+        public void DamagePlayer()
+        {
+            health = health - 1;
         }
     }
 }

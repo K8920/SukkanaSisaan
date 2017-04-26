@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Ellipse x:Name="PlayerEllipse" Fill="Gray" Height="50" Width="50" Stroke="Black"/>
+    <Grid>
+        <Image Source="/assets/player2.png"></Image>
+        <Ellipse x:Name="PlayerEllipse" Height="50" Width="50"/>
     </Grid>
 </Page>

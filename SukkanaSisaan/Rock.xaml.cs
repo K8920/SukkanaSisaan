@@ -25,8 +25,8 @@ namespace SukkanaSisaan
         public Rock()
         {
             this.InitializeComponent();
-            Width = 50;
-            Height = 50;
+            Width = 240;
+            Height = 135; 
         }
 
         public Rect GetRect()
