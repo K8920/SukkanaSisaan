@@ -50,7 +50,7 @@ namespace SukkanaSisaan
         public void GenerateNumber()
         {
             randomnumber = IntUtil.Random(1, 5);
-            Debug.WriteLine(randomnumber);
+            //Debug.WriteLine(randomnumber);
         }
 
         // RANDOM MOVE PATTERN FOR MONSTER

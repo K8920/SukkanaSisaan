@@ -94,13 +94,16 @@ namespace SukkanaSisaan
             }
 
             // List of monsters
-            monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
-            monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
-            monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
-            monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
-            monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
+            if (monsters.Count() == 0)
+            {
+                monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
+                monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
+                monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
+                //monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
+                monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
+                monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
+                monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
+            }
 
             // List of rocks
             rocks.Add(new Rock() { LocationX = 200, LocationY = 200 });
@@ -235,6 +238,8 @@ namespace SukkanaSisaan
 
         private void Timer_Tick(object sender, object e)
         {
+            Debug.WriteLine(monsters.Count);
+
             // moving
             CheckCollision();
             player.UpdatePlayer();
@@ -488,6 +493,8 @@ namespace SukkanaSisaan
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
 
+                        if (monsters.Count == 0) SpawnMonsters();
+
                         score = int.Parse(amountText.Text);
                         score = score + 69;
                         amountText.Text = score.ToString();
@@ -564,6 +571,24 @@ namespace SukkanaSisaan
                 case VirtualKey.C:
                     CPressed = true;
                     break;              
+            }
+        }
+        private void SpawnMonsters()
+        {
+            invTimer.Start();
+            player.Invulnerable = true;
+            monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
+            monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
+            monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
+            //monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
+            monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
+            monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
+            monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
+
+            foreach (Monster monster in monsters)
+            {
+                GameCanvas.Children.Add(monster);
+                monster.UpdateMonster();
             }
         }
     }
