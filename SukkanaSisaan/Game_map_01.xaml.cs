@@ -33,6 +33,7 @@ namespace SukkanaSisaan
         private Hits hits, hits2, hits3;
         private Projectile projectile;
         private List<Rock> rocks = new List<Rock>();
+        private int score;
 
         // canvas width and height
         private double CanvasWidth;
@@ -421,50 +422,34 @@ namespace SukkanaSisaan
                     RiHit = false;
                 }
             }
-
-            Rect r2 = player.GetRect();
-            if (r2.IsEmpty)
-            {
-                if (player.Invulnerable == false)
-                {
-                    player.DamagePlayer();
-                    invTimer.Start();
-                    player.Invulnerable = true;
-                    if (hearts.Count >= 1)
-                    {
-                        hearts.RemoveAt(hearts.Count - 1);
-                        GameCanvas.Children.RemoveAt(hearts.Count);
-                    };
-                    if (player.health == 0)
-
-                    {
-                        mediaElement.Stop();
-                        Frame.Navigate(typeof(MainPage));
-                    }
-                }
-            }
-
-            Rect r3 = player.GetRect();
-            if (r3.IsEmpty)
-            {
-                if (player.Invulnerable == false)
-                {
-                    player.DamagePlayer();
-                    invTimer.Start();
-                    player.Invulnerable = true;
-                    if (hearts.Count >= 1)
-                    {
-                        hearts.RemoveAt(hearts.Count - 1);
-                        GameCanvas.Children.RemoveAt(hearts.Count);
-                    };
-                    if (player.health == 0)
-
-                    {
-                        mediaElement.Stop();
-                        Frame.Navigate(typeof(MainPage));
-                    }
-                }
-            }
+            
+           foreach (Monster monster in monsters)
+           {
+            Rect rPlayer = player.GetRect();
+            Rect skull_2 = monster.GetRect();
+               rPlayer.Intersect(skull_2);
+               if (!rPlayer.IsEmpty)
+               {
+                   if (player.Invulnerable == false)
+                   {
+                       player.DamagePlayer();
+                       invTimer.Start();
+                       player.Invulnerable = true;
+                       if (hearts.Count >= 1)
+                       {
+                           hearts.RemoveAt(hearts.Count - 1);
+                           GameCanvas.Children.RemoveAt(hearts.Count);
+                       };
+                       if (player.health == 0)
+           
+                       {
+                           mediaElement.Stop();
+                           Frame.Navigate(typeof(MainPage));
+                       }
+                   }
+               }
+           }
+            
             if (ProjectileActive == true)
             {
                 foreach (Monster monster in monsters)
@@ -476,6 +461,10 @@ namespace SukkanaSisaan
                     {
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
+
+                        score = int.Parse(amountText.Text);
+                        score = score + 69;
+                        amountText.Text = score.ToString();
                         break;
                     }
                 }
