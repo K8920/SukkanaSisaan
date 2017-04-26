@@ -473,7 +473,9 @@ namespace SukkanaSisaan
                    }
                }
            }
-            
+
+            Rect rPlayer2 = player.GetRect();
+
             if (ProjectileActive == true)
             {
                 foreach (Monster monster in monsters)
@@ -553,6 +555,7 @@ namespace SukkanaSisaan
                         if (player.health == 0)
 
                         {
+                            mediaElement.Stop();
                             Frame.Navigate(typeof(MainPage));
                         }
                     }
