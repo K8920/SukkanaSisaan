@@ -68,10 +68,13 @@ namespace SukkanaSisaan
         public Game_map_01()
         {
             // INITIALIZE
+
             this.InitializeComponent();
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
             InitAudio();
+
+
 
             // List of hearts | Hitpoints |
             hearts = new List<Heart>();
@@ -552,5 +555,18 @@ namespace SukkanaSisaan
                 monster.UpdateMonster();
             }
         }
+        /*
+        private async void saveScore(object sender, RoutedEventArgs e)
+        {
+            //Create the text file to hold the data
+            Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            Windows.Storage.StorageFile scoreFile =
+                await storageFolder.CreateFileAsync("scorefile.txt",
+                Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            //Write data to the file
+            await Windows.Storage.FileIO.WriteTextAsync(scoreFile, "Swift as a shadow");
+        }
+        */
     }
 }
