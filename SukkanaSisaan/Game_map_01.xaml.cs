@@ -116,10 +116,7 @@ namespace SukkanaSisaan
                 rock.UpdateLocation();
                 GameCanvas.Children.Add(rock);
             }
-
-
-
-            // Monster monster = monsters.ElementAt(0);
+            
             // player location
             player = new Player
             {
@@ -127,13 +124,6 @@ namespace SukkanaSisaan
                 LocationY = GameCanvas.Height / 2
             };
             player.UpdatePlayer();
-
-            // solid object location
-            /*rock = new Rock
-            {
-                LocationX = 200,
-                LocationY = 200
-            };*/
 
             // npc location
             npc1 = new NPC
@@ -162,7 +152,7 @@ namespace SukkanaSisaan
             attTimer.Interval = new TimeSpan(0, 0, 0, 0, 250);
             attTimer.Tick += attTimer_Tick;
 
-            //invulnerability timer
+            // invulnerability timer
             invTimer = new DispatcherTimer();
             invTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             invTimer.Tick += invTimer_Tick;
@@ -185,28 +175,9 @@ namespace SukkanaSisaan
             {
                 rock.UpdateLocation();
             }
-           /* hearts = new List<Heart>();
-
-            int heartsCount = 3;
-            int xStartPos = 70;
-            int yStartPos = 30;
-            int step = 10;
-            for (int i = 0; i < heartsCount; i++)
-            {
-                int x = (50 + i * 71 + step) + xStartPos;
-                int y = (20 + step) + yStartPos;
-                Heart heart = new Heart
-                {
-                    LocationX = x,
-                    LocationY = y
-                };
-                hearts.Add(heart);
-                GameCanvas.Children.Add(heart);
-                heart.SetLocation();
-            }*/
         }
-        // random number generated for monster movement
 
+        // random number generated for monster movement
         private void randnumtimer_Tick(object sender, object e)
         {
             foreach (Monster monster in monsters)
@@ -224,6 +195,8 @@ namespace SukkanaSisaan
             }
         }
 
+        // attack timer ticks | called when attack key (Z) is pressed.
+        // 
         private void attTimer_Tick(object sender, object e)
         {
             GameCanvas.Children.Remove(projectile);
@@ -231,6 +204,7 @@ namespace SukkanaSisaan
             ProjectileActive = false;
         }
 
+        // i-frame timer ticks | called when monster damages player
         private void invTimer_Tick(object sender, object e)
         {
             invTimer.Stop();
@@ -240,7 +214,7 @@ namespace SukkanaSisaan
         private void Timer_Tick(object sender, object e)
         {
 
-            // moving
+            // moving and facing
             CheckCollision();
             player.UpdatePlayer();
 
@@ -248,37 +222,22 @@ namespace SukkanaSisaan
             {
                 player.PlayerFacing = 0;
                 player.MoveUp();
-                //DownPressed = false;
-                //LeftPressed = false;
-                //RightPressed = false;
-            
             }
             if (DownPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 2;
                 player.MoveDown();
-                //UpPressed = false;
-                //LeftPressed = false;
-                //RightPressed = false;
-
             }
             if (LeftPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 3;
                 player.MoveLeft();
-                //UpPressed = false;
-                //DownPressed = false;
-                //RightPressed = false;
-
             }
+
             if (RightPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 1;
                 player.MoveRight();
-                //UpPressed = false;
-                //LeftPressed = false;
-                //DownPressed = false;
-
             }
 
             // C KEY
@@ -303,11 +262,12 @@ namespace SukkanaSisaan
                 CPressed = false;
             }
 
-            // Z KEY
+            // Z KEY | Attack action
             if (ZPressed)
             {
                 if (ProjectileActive == false)
                 {
+                    // Rotate attack sprite depending on direction and reposition it
                     if (player.PlayerFacing == 0)
                     {
                         projectile = new Projectile
@@ -355,8 +315,8 @@ namespace SukkanaSisaan
                     attTimer.Start();
                 }
             }
-            
-        player.UpdatePlayer();
+            player.UpdatePlayer();
+
             foreach (Monster monster in monsters)
             {
                 monster.UpdateMonster();
@@ -371,13 +331,13 @@ namespace SukkanaSisaan
             else
             {
                 npc1.EmptyDialogue();
-
             }
         }
 
+        // audio elements
         private async void InitAudio()
         {
-            // audios
+            // BGM
             mediaElement = new MediaElement();
             StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
             StorageFile file = await folder.GetFileAsync("grass.mp3");
@@ -385,6 +345,7 @@ namespace SukkanaSisaan
             mediaElement.AutoPlay = true;
             mediaElement.SetSource(stream, file.ContentType);
 
+            // attack that lands
             mediaElement_2 = new MediaElement();
             StorageFolder folder2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
             StorageFile file2 = await folder2.GetFileAsync("iskill.wav");
@@ -393,34 +354,16 @@ namespace SukkanaSisaan
             mediaElement_2.SetSource(stream2, file2.ContentType);
         }
 
-        //private async void InitAudio2()
-       // {
-            // audios
-          //  mediaElement_2 = new MediaElement();
-            //StorageFolder folder2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
-            //StorageFile file2 = await folder2.GetFileAsync("iskill.wav");
-            //var stream2 = await file2.OpenAsync(FileAccessMode.Read);
-            //mediaElement_2.AutoPlay = false;
-            //mediaElement_2.SetSource(stream2, file2.ContentType);
-        //}
-
+        // Collision checks
         private void CheckCollision()
         {
-            // player
-           
-            //  Rect rMon1 = new Rect(monster.LocationX, monster.LocationY, monster.Width, monster.Height);
+            // rock to player
             foreach (Rock rock in rocks)
             {
                 Rect r1 = player.GetRect();
                 r1.Intersect(rock.GetRect());
 
-                // rock
-                //Rect r2 = new Rect(rock.LocationX, rock.LocationY, rock.ActualHeight, rock.ActualWidth);
-                // Rect woodsleft_1 = new Rect(woods_1.LocationX, woods_1.LocationY, woods_1.ActualHeight, woods_1.ActualWidth);
                 if (!r1.IsEmpty && UpPressed == true && DnHit == false && LeHit == false && RiHit == false)
-                //Rect woodsleft_1 = new Rect
-                //Rect woodsleft_1 = new Rect
-                //r1.Intersect(r2);
                 {
                     UpPressed = false;
                     UpHit = true;
@@ -453,14 +396,15 @@ namespace SukkanaSisaan
                     RiHit = false;
                 }
             }
-            
-           foreach (Monster monster in monsters)
-           {
+            // monsters collision to player
+            foreach (Monster monster in monsters)
+            {
             Rect rPlayer = player.GetRect();
             Rect skull_2 = monster.GetRect();
-               rPlayer.Intersect(skull_2);
+            rPlayer.Intersect(skull_2);
                if (!rPlayer.IsEmpty)
                {
+                   // if not invulnerable, damage player and start invulnerability timer
                    if (player.Invulnerable == false)
                    {
                        player.DamagePlayer();
@@ -471,8 +415,8 @@ namespace SukkanaSisaan
                            hearts.RemoveAt(hearts.Count - 1);
                            GameCanvas.Children.RemoveAt(hearts.Count);
                        };
+                       // you die at 0 health.
                        if (player.health == 0)
-           
                        {
                            mediaElement.Stop();
                            Frame.Navigate(typeof(GameOver));
@@ -481,8 +425,7 @@ namespace SukkanaSisaan
                }
            }
 
-            Rect rPlayer2 = player.GetRect();
-
+            // check if attack pressed | projectile(sword) touched monster
             if (ProjectileActive == true)
             {
                 foreach (Monster monster in monsters)
@@ -492,14 +435,17 @@ namespace SukkanaSisaan
                     rSword1.Intersect(skull);
                     if (!rSword1.IsEmpty)
                     {
+                        // on collision remove monster
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
+                        // if all monsters are removed, spawn more
                         if (monsters.Count == 0)
                         {
                             SpawnMonsters();
                         }
+                        // score counter
                         score = int.Parse(amountText.Text);
-                        score = score + 69;
+                        score = score + 75;
                         amountText.Text = score.ToString();
                         mediaElement_2.Play();
                         break;
@@ -508,6 +454,7 @@ namespace SukkanaSisaan
             }
         }
         
+        // KEY UPS
         private void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -533,12 +480,11 @@ namespace SukkanaSisaan
             }
         }
 
-        // lul lul
+        // KEY DOWNS
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             switch (args.VirtualKey)
             {
-                       
                 case VirtualKey.Up:
                     UpPressed = true;
                     break;
@@ -555,6 +501,7 @@ namespace SukkanaSisaan
                     ZPressed = true;
                     break;
                 case VirtualKey.X:
+                    // SUICIDE for debugging
                     if (XPressed == false)
                     {
                         player.DamagePlayer();
@@ -577,12 +524,13 @@ namespace SukkanaSisaan
                     break;              
             }
         }
+        // Called to spawn new monsters with increased speed
         private void SpawnMonsters()
         {
             invTimer.Start();
             player.Invulnerable = true;
             MonSpeed = MonSpeed + 2;
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed});
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed });
             monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed });
             monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed });
 
