@@ -117,7 +117,7 @@ namespace SukkanaSisaan
             {
                 GameCanvas.Children.Add(rock);
             }
-       
+            
            // Monster monster = monsters.ElementAt(0);
             // player location
             player = new Player
@@ -400,7 +400,24 @@ namespace SukkanaSisaan
             var stream = await file.OpenAsync(FileAccessMode.Read);
             mediaElement.AutoPlay = true;
             mediaElement.SetSource(stream, file.ContentType);
+            mediaElement_2 = new MediaElement();
+            StorageFolder folder2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            StorageFile file2 = await folder2.GetFileAsync("iskill.wav");
+            var stream2 = await file2.OpenAsync(FileAccessMode.Read);
+            mediaElement_2.AutoPlay = false;
+            mediaElement_2.SetSource(stream2, file2.ContentType);
         }
+
+        //private async void InitAudio2()
+       // {
+            // audios
+          //  mediaElement_2 = new MediaElement();
+            //StorageFolder folder2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            //StorageFile file2 = await folder2.GetFileAsync("iskill.wav");
+            //var stream2 = await file2.OpenAsync(FileAccessMode.Read);
+            //mediaElement_2.AutoPlay = false;
+            //mediaElement_2.SetSource(stream2, file2.ContentType);
+        //}
 
         private void CheckCollision()
         {
@@ -473,7 +490,7 @@ namespace SukkanaSisaan
            
                        {
                            mediaElement.Stop();
-                           Frame.Navigate(typeof(MainPage));
+                           Frame.Navigate(typeof(GameOver));
                        }
                    }
                }
@@ -498,6 +515,7 @@ namespace SukkanaSisaan
                         score = int.Parse(amountText.Text);
                         score = score + 69;
                         amountText.Text = score.ToString();
+                        mediaElement_2.Play();
                         break;
                     }
                 }
