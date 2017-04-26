@@ -595,13 +595,21 @@ namespace SukkanaSisaan
         {
             invTimer.Start();
             player.Invulnerable = true;
-            monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
-            monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
-            monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
             //monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
-            monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
-            monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
+
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
+
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
 
             foreach (Monster monster in monsters)
             {
