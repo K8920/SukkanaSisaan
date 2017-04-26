@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 namespace SukkanaSisaan
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Game logic and main frame
     /// </summary>
     public sealed partial class Game_map_01 : Page
     {
@@ -30,7 +30,6 @@ namespace SukkanaSisaan
         private Player player;
         private List<Heart> hearts;
         public List<Monster> monsters = new List<Monster>();
-        private Hits hits, hits2, hits3;
         private Projectile projectile;
         private List<Rock> rocks = new List<Rock>();
         private int score;
@@ -38,8 +37,7 @@ namespace SukkanaSisaan
         // canvas width and height
         private double CanvasWidth;
         private double CanvasHeight;
-        public double PosX;
-        public double PosY;
+        public double MonSpeed = 7;
 
         private bool UpPressed;
         private bool DownPressed;
@@ -69,12 +67,14 @@ namespace SukkanaSisaan
 
         public Game_map_01()
         {
+            // INITIALIZE
             this.InitializeComponent();
             CanvasWidth = GameCanvas.Width;
             CanvasHeight = GameCanvas.Height;
             InitAudio();
-            hearts = new List<Heart>();
 
+            // List of hearts | Hitpoints |
+            hearts = new List<Heart>();
             int heartsCount = 3;
             int xStartPos = 0;
             int yStartPos = 30;
@@ -99,26 +99,27 @@ namespace SukkanaSisaan
                 monsters.Add(new Monster() { LocationX = 100, LocationY = 400 });
                 monsters.Add(new Monster() { LocationX = 200, LocationY = 50 });
                 monsters.Add(new Monster() { LocationX = 300, LocationY = 0 });
-                //monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
                 monsters.Add(new Monster() { LocationX = 500, LocationY = 150 });
                 monsters.Add(new Monster() { LocationX = 1000, LocationY = 235 });
                 monsters.Add(new Monster() { LocationX = 700, LocationY = 120 });
+            }
+            foreach (Monster monster in monsters)
+            {
+                GameCanvas.Children.Add(monster);
             }
 
             // List of rocks
             rocks.Add(new Rock() { LocationX = 200, LocationY = 200 });
             rocks.Add(new Rock() { LocationX = 600, LocationY = 600 });
-
-            foreach (Monster monster in monsters)
-            {
-                GameCanvas.Children.Add(monster);
-            }
             foreach (Rock rock in rocks)
             {
+                rock.UpdateLocation();
                 GameCanvas.Children.Add(rock);
             }
-            
-           // Monster monster = monsters.ElementAt(0);
+
+
+
+            // Monster monster = monsters.ElementAt(0);
             // player location
             player = new Player
             {
@@ -238,7 +239,6 @@ namespace SukkanaSisaan
 
         private void Timer_Tick(object sender, object e)
         {
-            Debug.WriteLine(monsters.Count);
 
             // moving
             CheckCollision();
@@ -373,22 +373,6 @@ namespace SukkanaSisaan
                 npc1.EmptyDialogue();
 
             }
-
-            /* if (CollisionHappen == true)
-             {
-                 UpPressed = false;
-                 DownPressed = false;
-                 LeftPressed = false;
-                 RightPressed = false;
-
-
-            // POISTA
-             if (UpPressed) player.MoveUp();
-                 if (DownPressed) player.MoveDown();
-                 if (LeftPressed) player.MoveLeft();
-                 if (RightPressed) player.MoveRight();
-             }
-             */
         }
 
         private async void InitAudio()
@@ -400,6 +384,7 @@ namespace SukkanaSisaan
             var stream = await file.OpenAsync(FileAccessMode.Read);
             mediaElement.AutoPlay = true;
             mediaElement.SetSource(stream, file.ContentType);
+
             mediaElement_2 = new MediaElement();
             StorageFolder folder2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
             StorageFile file2 = await folder2.GetFileAsync("iskill.wav");
@@ -509,9 +494,10 @@ namespace SukkanaSisaan
                     {
                         monsters.Remove(monster);
                         GameCanvas.Children.Remove(monster);
-
-                        if (monsters.Count == 0) SpawnMonsters();
-
+                        if (monsters.Count == 0)
+                        {
+                            SpawnMonsters();
+                        }
                         score = int.Parse(amountText.Text);
                         score = score + 69;
                         amountText.Text = score.ToString();
@@ -595,21 +581,22 @@ namespace SukkanaSisaan
         {
             invTimer.Start();
             player.Invulnerable = true;
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 10 });
-            //monsters.Add(new Monster() { LocationX = 12000, LocationY = 600 });
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950 });
+            MonSpeed = MonSpeed + 2;
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed});
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 10, speed = MonSpeed });
 
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
-            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 950, speed = MonSpeed });
 
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
-            monsters.Add(new Monster() { LocationX = 10, LocationY = 950 });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 1270, LocationY = 10, speed = MonSpeed });
+
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950, speed = MonSpeed });
+            monsters.Add(new Monster() { LocationX = 10, LocationY = 950, speed = MonSpeed });
 
             foreach (Monster monster in monsters)
             {

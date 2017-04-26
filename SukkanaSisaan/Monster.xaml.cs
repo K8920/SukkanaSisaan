@@ -92,5 +92,9 @@ namespace SukkanaSisaan
             SetValue(Canvas.LeftProperty, LocationX);
             SetValue(Canvas.TopProperty, LocationY);
         }
+        public void SpeedUp()
+        {
+         //   Speed = Speed + 20;
+        }
     }
 }
