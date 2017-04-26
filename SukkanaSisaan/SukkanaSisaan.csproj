@@ -97,6 +97,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Audio.cs" />
+    <Compile Include="GameOver.xaml.cs">
+      <DependentUpon>GameOver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game_map_01.xaml.cs">
       <DependentUpon>Game_map_01.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,7 @@
     <Content Include="Assets\grass.mp3" />
     <Content Include="Assets\grass.png" />
     <Content Include="Assets\medieval_animeme.png" />
+    <Content Include="Assets\medieval_gameoverroror.png" />
     <Content Include="Assets\nappiback.png" />
     <Content Include="Assets\nappiscore.png" />
     <Content Include="Assets\nappiso.png" />
@@ -166,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GameOver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Game_map_01.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

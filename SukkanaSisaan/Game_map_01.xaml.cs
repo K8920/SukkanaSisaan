@@ -468,7 +468,7 @@ namespace SukkanaSisaan
            
                        {
                            mediaElement.Stop();
-                           Frame.Navigate(typeof(MainPage));
+                           Frame.Navigate(typeof(GameOver));
                        }
                    }
                }
