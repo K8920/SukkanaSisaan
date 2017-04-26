@@ -47,6 +47,7 @@ namespace SukkanaSisaan
         private bool RightPressed;
         private bool ZPressed;
         private bool XPressed;
+        private bool CPressed;
         private bool ProjectileActive = false;
 
         private bool UpHit = false;
@@ -242,38 +243,61 @@ namespace SukkanaSisaan
             {
                 player.PlayerFacing = 0;
                 player.MoveUp();
-                DownPressed = false;
-                LeftPressed = false;
-                RightPressed = false;
+                //DownPressed = false;
+                //LeftPressed = false;
+                //RightPressed = false;
             
             }
             if (DownPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 2;
                 player.MoveDown();
-                UpPressed = false;
-                LeftPressed = false;
-                RightPressed = false;
+                //UpPressed = false;
+                //LeftPressed = false;
+                //RightPressed = false;
 
             }
             if (LeftPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 3;
                 player.MoveLeft();
-                UpPressed = false;
-                DownPressed = false;
-                RightPressed = false;
+                //UpPressed = false;
+                //DownPressed = false;
+                //RightPressed = false;
 
             }
             if (RightPressed && ProjectileActive == false)
             {
                 player.PlayerFacing = 1;
                 player.MoveRight();
-                UpPressed = false;
-                LeftPressed = false;
-                DownPressed = false;
+                //UpPressed = false;
+                //LeftPressed = false;
+                //DownPressed = false;
 
             }
+
+            // C KEY
+            if (CPressed && RightPressed)
+            {
+                player.LocationX = player.LocationX + 75;
+                CPressed = false;
+            }
+            if (CPressed && LeftPressed)
+            {
+                player.LocationX = player.LocationX - 75;
+                CPressed = false;
+            }
+            if (CPressed && UpPressed)
+            {
+                player.LocationY = player.LocationY - 75;
+                CPressed = false;
+            }
+            if (CPressed && DownPressed)
+            {
+                player.LocationY = player.LocationY + 75;
+                CPressed = false;
+            }
+
             // Z KEY
             if (ZPressed)
             {
@@ -534,6 +558,9 @@ namespace SukkanaSisaan
                     }
                     XPressed = true;
                     break;
+                case VirtualKey.C:
+                    CPressed = true;
+                    break;              
             }
         }
     }
